@@ -11,8 +11,9 @@ import {
   RefreshOutlined as RefreshOutlinedIcon,
 } from "@mui/icons-material";
 import { tokens } from "../theme";
+import { borderRadius } from "@mui/system";
 
-const InfoCard = ({ title, info, source, status, getData }) => {
+const InfoCard = ({ title, info, source, status, getData, desc }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
@@ -29,12 +30,13 @@ const InfoCard = ({ title, info, source, status, getData }) => {
         justifyContent: "center",
         display: "flex",
         padding: "20px",
+        paddingTop: "8px",
         flexDirection: "column",
         marginTop: "10px",
         width: "100%",
         maxHeight: "relative",
         height: "max-content",
-        alignItems: "center",
+        alignItems: "start",
       }}
     >
       <Box
@@ -43,7 +45,7 @@ const InfoCard = ({ title, info, source, status, getData }) => {
           flexDirection: "row",
         }}
       >
-        <Typography fontSize={"1.2rem"} color={colors.primary[500]}>
+        <Typography fontSize={"1.1rem"} color={"#dee2e6"}>
           {title}
         </Typography>
         <a
@@ -51,7 +53,7 @@ const InfoCard = ({ title, info, source, status, getData }) => {
           target="_blank"
           style={{
             textDecoration: "none",
-            color: colors.primary[500],
+            color: "#dee2e6",
             marginTop: "4px",
           }}
         >
@@ -60,10 +62,17 @@ const InfoCard = ({ title, info, source, status, getData }) => {
           />
         </a>
       </Box>
-      <Box>
+      <Box
+        sx={{
+          width: "100%",
+          alignItems: "center",
+          justifyContent: "center",
+          justifyItems: "center",
+        }}
+      >
         <Box
           sx={{
-            fontSize: "2.5rem",
+            fontSize: "2rem",
             fontWeight: "bold",
             marginTop: "8px",
             color: colors.chartPalette[100],
@@ -127,6 +136,22 @@ const InfoCard = ({ title, info, source, status, getData }) => {
           )}
         </Box>
       </Box>
+      {desc && (
+        <Box
+          sx={{
+            border: "1px solid #343a40",
+            borderRadius: "14px",
+            paddingRight: "10px",
+            paddingLeft: "10px",
+            paddingTop: "4px",
+            paddingBottom: "4px",
+            marginTop: "20px",
+            color: "#dee2e6",
+          }}
+        >
+          {desc}
+        </Box>
+      )}
     </Grid>
   );
 };

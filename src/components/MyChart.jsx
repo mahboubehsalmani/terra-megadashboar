@@ -75,10 +75,10 @@ const MyChart = ({
         }}
       >
         <Box>
-          <Typography color={colors.primary[600]} fontSize="1.4rem">
+          <Typography color="#dee2e6" fontSize="1.2rem">
             {title}
           </Typography>
-          <Typography color={colors.primary[300]} fontSize="1rem">
+          <Typography color={"#ced4da"} fontSize="1rem">
             {subtitle}
           </Typography>
         </Box>

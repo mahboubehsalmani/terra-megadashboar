@@ -34,8 +34,8 @@ const MyTable = ({ data, columns, title, subtitle, url, defaultSize }) => {
   };
 
   useEffect(() => {
-    if (defaultSize) {
-      defaultSize === 100 ? setTableWidth(11.6) : setTableWidth(5.8);
+    if (defaultSize == 100) {
+      setTableWidth(11.6);
     } else {
       const width = window.innerWidth;
       width > 1200 ? setTableWidth(5.8) : setTableWidth(11.6);

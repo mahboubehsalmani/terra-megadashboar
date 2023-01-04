@@ -56,8 +56,8 @@ const MyTable = ({ data, columns, title, subtitle, url, defaultSize }) => {
         MUIDataTableBodyCell: {
           styleOverrides: {
             root: {
-              backgroundColor: "#33415c",
-              color: "white",
+              backgroundColor: colors.grey[900],
+              color: colors.grey[200],
             },
           },
         },
@@ -65,7 +65,7 @@ const MyTable = ({ data, columns, title, subtitle, url, defaultSize }) => {
           styleOverrides: {
             root: {
               backgroundColor: colors.backgroundColor[600],
-              color: "white",
+              color: colors.grey[200],
             },
           },
         },
@@ -80,7 +80,7 @@ const MyTable = ({ data, columns, title, subtitle, url, defaultSize }) => {
         MuiSvgIcon: {
           styleOverrides: {
             root: {
-              color: "white",
+              color: colors.grey[200],
             },
           },
         },
@@ -91,17 +91,11 @@ const MyTable = ({ data, columns, title, subtitle, url, defaultSize }) => {
             },
           },
         },
-        // MUIDataTableHeadCell: {
-        //   styleOverrides: {
-        //     root: {
-        //       color: "white",
-        //     },
-        //   },
-        // },
-        MuiToolbar: {
+        MUIDataTablePagination: {
           styleOverrides: {
             root: {
-              MuiTablePagination: "white",
+              backgroundColor: colors.backgroundColor[500],
+              color: "#fff",
             },
           },
         },

@@ -54,8 +54,8 @@ const MyChart = ({
   };
 
   useEffect(() => {
-    if (defaultSize) {
-      defaultSize === 100 ? setChartWidth(11.8) : setChartWidth(5.8);
+    if (defaultSize == 100) {
+      setChartWidth(11.8);
     } else {
       const width = window.innerWidth;
       width > 1200 ? setChartWidth(5.8) : setChartWidth(11.8);

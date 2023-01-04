@@ -70,16 +70,22 @@ const queryAverageBlockTimePerWeek =
 const getTotalNumberOfNewWalletsPerWeek =
   "https://api.flipsidecrypto.com/api/v2/queries/85d7bd06-f44a-487c-87d5-b0671438c9d7/data/latest";
 const getTotalNumberOfActiveWalletsPerWeek =
-  "https://node-api.flipsidecrypto.com/api/v2/queries/fec2a5f8-1d02-4d2a-921c-76b83ec00cad/data/latest";
+  "https://api.flipsidecrypto.com/api/v2/queries/78b38a27-1248-4bd6-b685-e5db62218475/data/latest";
 const getCumulativeNumberOfWalletsOverTime =
   "https://node-api.flipsidecrypto.com/api/v2/queries/f08d7454-80f1-469f-b4d1-94ac4e256a54/data/latest";
 const queryCumulativeNumberOfWalletsOverTime =
   "https://app.flipsidecrypto.com/velocity/queries/f08d7454-80f1-469f-b4d1-94ac4e256a54";
 const queryTotalNumberOfActiveWalletsPerWeek =
-  "https://app.flipsidecrypto.com/velocity/queries/fec2a5f8-1d02-4d2a-921c-76b83ec00cad";
+  "https://app.flipsidecrypto.com/velocity/queries/78b38a27-1248-4bd6-b685-e5db62218475";
 const queryTotalNumberOfNewWalletsPerWeek =
   "https://app.flipsidecrypto.com/velocity/queries/85d7bd06-f44a-487c-87d5-b0671438c9d7";
+const getNumberofWallets =
+  "https://api.flipsidecrypto.com/api/v2/queries/d207cc1a-2825-4f04-a996-426e8985fa63/data/latest";
+const getActiveNewWallets =
+  "https://api.flipsidecrypto.com/api/v2/queries/f174fd5c-e1c3-468a-a064-bc92e290ac22/data/latest";
 
+const getAverageTxPerWallet =
+  "https://api.flipsidecrypto.com/api/v2/queries/fe850ab8-731a-4bd5-8e5a-aa4d1a8b3df5/data/latest";
 // Development
 const getNewContractsDeployedEachWeek =
   "https://node-api.flipsidecrypto.com/api/v2/queries/b497e6f2-a790-4f72-8c48-c761d17afd44/data/latest";
@@ -164,4 +170,7 @@ export default {
   queryAverageTPSForPastDay,
   getCurrentPrice,
   getActiveUserForPastDay,
+  getNumberofWallets,
+  getActiveNewWallets,
+  getAverageTxPerWallet,
 };

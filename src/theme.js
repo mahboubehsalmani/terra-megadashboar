@@ -17,15 +17,15 @@ export const tokens = (mode) => ({
           900: "#9e0059",
         },
         grey: {
-          100: "#e0e0e0",
-          200: "#c2c2c2",
-          300: "#a3a3a3",
-          400: "#858585",
-          500: "#666666",
-          600: "#525252",
-          700: "#3d3d3d",
-          800: "#292929",
-          900: "#141414",
+          100: "#f8f9fa",
+          200: "#e9ecef",
+          300: "#dee2e6",
+          400: "#ced4da",
+          500: "#adb5bd",
+          600: "#6c757d",
+          700: "#495057",
+          800: "#343a40",
+          900: "#212529",
         },
         // dark blue to light bg
         backgroundColor: {
@@ -254,30 +254,30 @@ export const themeSettings = (mode) => {
           }),
     },
     typography: {
-      fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+      fontFamily: ["Open Sans", "sans-serif"].join(","),
       fontSize: 12,
       h1: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontFamily: ["Open Sans", "sans-serif"].join(","),
         fontSize: 40,
       },
       h2: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontFamily: ["Open Sans", "sans-serif"].join(","),
         fontSize: 32,
       },
       h3: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontFamily: ["Open Sans", "sans-serif"].join(","),
         fontSize: 24,
       },
       h4: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontFamily: ["Open Sans", "sans-serif"].join(","),
         fontSize: 20,
       },
       h5: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontFamily: ["Open Sans", "sans-serif"].join(","),
         fontSize: 16,
       },
       h6: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+        fontFamily: ["Open Sans", "sans-serif"].join(","),
         fontSize: 14,
       },
     },

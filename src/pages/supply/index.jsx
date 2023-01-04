@@ -10,6 +10,7 @@ import WeeklyStakingRewardsDistributed from "./weeklyStakingRewardsDistributed";
 import InfoCard from "../../components/InfoCard";
 import IBC from "./IBC";
 import IBCPercent from "./IBCPercent";
+import MyTable from "../../components/MaterialTable";
 
 const Supply = () => {
   const theme = useTheme();
@@ -312,9 +313,9 @@ const Supply = () => {
   const getRichList = async () => {
     try {
       const res = await http.get(apis.getRichList);
-      let data = [...res];
-      data.map((row, index) => {
-        row.id = index;
+      let data = [];
+      res.map((row) => {
+        data = [...data, [row.USER, row.BALANCE]];
       });
       setRichList(data);
     } catch (error) {}
@@ -443,10 +444,10 @@ const Supply = () => {
           getData={getWeeklyStakingRewardsDistributed}
           status={statusWeeklyStakingRewardsDistributed}
         />
-        <RichBox
-          rows={richList}
+        <MyTable
+          data={richList}
+          columns={["user", "balance"]}
           title="Rich List"
-          subtitle="top users wallet balance"
         />
       </Grid>
     </Box>

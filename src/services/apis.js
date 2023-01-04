@@ -21,6 +21,12 @@ const getAverageTPSForPastDay =
 const queryAverageTPSForPastDay =
   "https://app.flipsidecrypto.com/velocity/queries/53b9ac4e-f1d4-4f6b-a4f6-441b1d7e0094";
 
+const getCurrentPrice =
+  "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=terra-luna-2";
+
+const getActiveUserForPastDay =
+  "https://api.flipsidecrypto.com/api/v2/queries/c488dc9a-15df-4d7b-9060-f1209e60fda2/data/latest";
+
 // Transactions
 const getAverageTransactionFeePerTransactionPerWeek =
   "https://node-api.flipsidecrypto.com/api/v2/queries/ce70d394-0d9a-42da-a45d-5447e3fbe723/data/latest";
@@ -156,4 +162,6 @@ export default {
   queryNumberOfTransactionsPastDay,
   getAverageTPSForPastDay,
   queryAverageTPSForPastDay,
+  getCurrentPrice,
+  getActiveUserForPastDay,
 };

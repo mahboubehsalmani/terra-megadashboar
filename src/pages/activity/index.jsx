@@ -12,7 +12,7 @@ import InfoCard from "../../components/InfoCard";
 import { useEffect, useState } from "react";
 import http from "../../services/http";
 
-const Transactions = () => {
+const Activity = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [quickData, setQuickData] = useState({});
@@ -379,4 +379,4 @@ const Transactions = () => {
   );
 };
 
-export default Transactions;
+export default Activity;

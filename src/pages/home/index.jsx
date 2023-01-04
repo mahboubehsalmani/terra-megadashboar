@@ -8,17 +8,24 @@ import http from "../../services/http";
 import { tokens } from "../../theme";
 import TerraPastSevenDaysHourlyPrice from "./terraPastSevenDaysHourlyPrice";
 import MyChart from "../../components/MyChart";
+import AboutTerra from "./aboutTerra";
+import CurrentPrice from "./currentPrice";
+import QuickAccess from "./quickAccess";
+import PastDayData from "./pastDayData";
 
 const Home = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const sourceQuickData = apis.queryAllTimeQuickTransactions;
-  const [quickData, setQuickData] = useState({});
-  const [loadingStatus, setLoadingStatus] = useState("loading");
-  const [statusHourlyPrice, setStatusHourlyPrice] = useState("loading");
+
   const [statusAverageTPS, setStatusAverageTPS] = useState("loading");
   const [statusNewUsers, setStatusNewUsers] = useState("loading");
   const [statusTransactions, setStatusTransactions] = useState("loading");
+  const [statusHourlyPrice, setStatusHourlyPrice] = useState("loading");
+  const [statusCurrentPrice, setStatusCurrentPrice] = useState("loading");
+  const [statusActiveUsers, setStatusActiveUsers] = useState("loading");
+  const [dataActiveUsers, setdataActiveUsers] = useState(null);
+  const [dataCurrentPrice, setCurrentPrice] = useState(null);
+  const [dataPastDay, setDataPastDay] = useState(null);
   const [dataAverageTPS, setDataAverageTPS] = useState(null);
   const [dataNewUsers, setDataNewUsers] = useState(null);
   const [dataTransactions, setDataTransactions] = useState(null);
@@ -36,20 +43,46 @@ const Home = () => {
   });
 
   useEffect(() => {
-    getData();
     getHourlyPrice();
+    getCurrentPrice();
     getTransactions();
     getNewUsers();
     getAverageTPS();
+    getActiveUsers();
   }, []);
 
-  const getData = async () => {
+  const getHourlyPrice = async () => {
+    setStatusHourlyPrice("loading");
+
     try {
-      const res = await http.get(apis.getThisWeekQuickTransactions);
-      setQuickData(res[0]);
-      setLoadingStatus("loaded");
+      const res = await http.get(apis.getHourlyPrive);
+      setDataHourlyPrice({
+        labels: res.map((data) => data.HOUR),
+        datasets: [
+          {
+            label: "Price",
+            data: res.map((data) => data.PRICE),
+            backgroundColor: [colors.chartPalette[100]],
+            borderColor: colors.chartPalette[100],
+            borderWidth: 1,
+          },
+        ],
+      });
+      setStatusHourlyPrice("loaded");
     } catch (error) {
-      setLoadingStatus("error");
+      setStatusHourlyPrice("error");
+    }
+  };
+
+  const getCurrentPrice = async () => {
+    setStatusCurrentPrice("loading");
+    try {
+      const res = await http.get(apis.getCurrentPrice);
+      setCurrentPrice(res[0]);
+      console.log(res);
+      setStatusCurrentPrice("loaded");
+    } catch (error) {
+      setStatusCurrentPrice("error");
     }
   };
 
@@ -83,30 +116,21 @@ const Home = () => {
       setDataNewUsers(res[0].NEW_WALLETS);
       setStatusNewUsers("loaded");
     } catch (error) {
+      console.log(error.message);
       setStatusNewUsers("error");
     }
   };
 
-  const getHourlyPrice = async () => {
-    setStatusHourlyPrice("loading");
-
+  const getActiveUsers = async () => {
+    setStatusActiveUsers("loading");
     try {
-      const res = await http.get(apis.getHourlyPrive);
-      setDataHourlyPrice({
-        labels: res.map((data) => data.HOUR),
-        datasets: [
-          {
-            label: "Price",
-            data: res.map((data) => data.PRICE),
-            backgroundColor: [colors.chartPalette[100]],
-            borderColor: colors.chartPalette[100],
-            borderWidth: 1,
-          },
-        ],
-      });
-      setStatusHourlyPrice("loaded");
+      const res = await http.get(apis.getActiveUserForPastDay);
+      console.log(res[0]);
+      setdataActiveUsers(res[0].USERS);
+      setStatusActiveUsers("loaded");
     } catch (error) {
-      setStatusHourlyPrice("error");
+      console.log(error.message);
+      setStatusActiveUsers("error");
     }
   };
 
@@ -114,104 +138,42 @@ const Home = () => {
     <Box
       sx={{
         padding: "20px",
+        paddingLeft: "0px",
       }}
     >
-      <h1>HOME</h1>
-
-      <Grid
-        container
-        gap={2}
-        sx={{
-          width: "100%",
-        }}
-      >
-        <InfoCard
-          title="Total No. of Transactions"
-          source={sourceQuickData}
-          info={
-            quickData.TOTAL_TRANSACTIONS
-              ? quickData.TOTAL_TRANSACTIONS.toLocaleString("en-US")
-              : null
-          }
-          status={loadingStatus}
-          getData={getData}
-        />
-        <InfoCard
-          title="Total Fee of Transactions"
-          source={sourceQuickData}
-          info={
-            quickData.TOTAL_FEE
-              ? quickData.TOTAL_FEE.toLocaleString("en-US")
-              : null
-          }
-          status={loadingStatus}
-          getData={getData}
-        />
-        <InfoCard
-          title="Average of Fees of Transactions"
-          source={sourceQuickData}
-          info={
-            quickData.AVERAGE_FEE
-              ? quickData.AVERAGE_FEE.toLocaleString("en-US")
-              : null
-          }
-          status={loadingStatus}
-          getData={getData}
-        />
-        <InfoCard
-          title="Total Users"
-          source={sourceQuickData}
-          info={
-            quickData.USERS ? quickData.USERS.toLocaleString("en-US") : null
-          }
-          status={loadingStatus}
-          getData={getData}
-        />
-        <InfoCard
-          title="Total TPS"
-          source={sourceQuickData}
-          info={quickData.TPS ? quickData.TPS.toLocaleString("en-US") : null}
-          status={loadingStatus}
-          getData={getData}
-        />
-
-        <InfoCard
-          title="No. Transactions of past 24 hours"
-          source={apis.queryNumberOfTransactionsPastDay}
-          info={
-            dataTransactions ? dataTransactions.toLocaleString("en-US") : null
-          }
-          status={statusTransactions}
-          getData={getTransactions}
-        />
-
-        <InfoCard
-          title="Average TPS of past 24 hours"
-          source={apis.queryAverageTPSForPastDay}
-          info={dataAverageTPS ? dataAverageTPS.toLocaleString("en-US") : null}
-          status={statusAverageTPS}
-          getData={getAverageTPS}
-        />
-
-        <InfoCard
-          title="New users of past 24 hours"
-          source={apis.queryNewWalletsPastDay}
-          info={dataNewUsers ? dataNewUsers.toLocaleString("en-US") : null}
-          status={statusNewUsers}
-          getData={getNewUsers}
-        />
-      </Grid>
-
-      <Grid container>
-        <MyChart
-          title="Terra's hourly price for the past 7 days"
-          Chart={TerraPastSevenDaysHourlyPrice}
-          url={apis.queryHourlyPrice}
-          status={statusHourlyPrice}
-          getData={getHourlyPrice}
-          data={dataHourlyPrice}
-          defaultSize={100}
-        />
+      <Grid container gap={2}>
+        <Grid item xs={12} lg={8}>
+          <AboutTerra />
+          <QuickAccess />
+        </Grid>
+        <Grid item xs={12} lg={3.8}>
+          <CurrentPrice
+            data={dataCurrentPrice}
+            status={statusCurrentPrice}
+            getData={getCurrentPrice}
+          />
+          <TerraPastSevenDaysHourlyPrice data={dataHourlyPrice} />
+          <PastDayData
+            data={{
+              dataAverageTPS,
+              dataNewUsers,
+              dataTransactions,
+              dataActiveUsers,
+            }}
+            status={{
+              statusAverageTPS,
+              statusNewUsers,
+              statusTransactions,
+              statusActiveUsers,
+            }}
+            getData={{
+              getAverageTPS,
+              getNewUsers,
+              getTransactions,
+              getActiveUsers,
+            }}
+          />
+        </Grid>
       </Grid>
     </Box>
   );

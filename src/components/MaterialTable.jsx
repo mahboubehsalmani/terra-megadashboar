@@ -1,37 +1,30 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
+import MUIDataTable from "mui-datatables";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { tokens } from "../theme";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableFooter,
-  TablePagination,
-  TableRow,
-  Paper,
-  Grid,
   Box,
+  Grid,
   IconButton,
   Menu,
+  MenuItem,
   Typography,
   useTheme,
-  MenuItem,
 } from "@mui/material";
-import TablePaginationActions from "./TablePaginationActions";
-import { tokens } from "../theme";
-import { useState } from "react";
 import {
   SettingsOutlined as SettingsOutlinedIcon,
   LaunchOutlined as LaunchOutlinedIcon,
   CheckOutlined as CheckOutlinedIcon,
+  RefreshOutlined as RefreshOutlinedIcon,
+  WindowOutlined as WindowOutlinedIcon,
 } from "@mui/icons-material";
 
-const RichListTable = ({ rows, title, subtitle, url }) => {
+const MyTable = ({ data, columns, title, subtitle, url, defaultSize }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [chartWidth, setChartWidth] = useState(5.8);
+  const [tableWidth, setTableWidth] = useState(5.8);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -40,23 +33,85 @@ const RichListTable = ({ rows, title, subtitle, url }) => {
     setAnchorEl(null);
   };
 
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  useEffect(() => {
+    if (defaultSize) {
+      defaultSize === 100 ? setTableWidth(11.6) : setTableWidth(5.8);
+    } else {
+      const width = window.innerWidth;
+      width > 1200 ? setTableWidth(5.8) : setTableWidth(11.6);
+    }
+  }, []);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+  const options = {
+    filterType: "checkbox",
+    selectableRows: false,
+    filter: false,
+    print: false,
+    jumpToPage: false,
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  const getMuiTheme = () =>
+    createTheme({
+      components: {
+        MUIDataTableBodyCell: {
+          styleOverrides: {
+            root: {
+              backgroundColor: "#33415c",
+              color: "white",
+            },
+          },
+        },
+        MUIDataTableHeadCell: {
+          styleOverrides: {
+            root: {
+              backgroundColor: colors.backgroundColor[600],
+              color: "white",
+            },
+          },
+        },
+        MUIDataTableToolbar: {
+          styleOverrides: {
+            root: {
+              backgroundColor: colors.backgroundColor[500],
+              color: colors.grey[900],
+            },
+          },
+        },
+        MuiSvgIcon: {
+          styleOverrides: {
+            root: {
+              color: "white",
+            },
+          },
+        },
+        MUIDataTableFooter: {
+          styleOverrides: {
+            root: {
+              backgroundColor: colors.backgroundColor[500],
+            },
+          },
+        },
+        // MUIDataTableHeadCell: {
+        //   styleOverrides: {
+        //     root: {
+        //       color: "white",
+        //     },
+        //   },
+        // },
+        MuiToolbar: {
+          styleOverrides: {
+            root: {
+              MuiTablePagination: "white",
+            },
+          },
+        },
+      },
+    });
 
   return (
     <Grid
       item
-      xs={chartWidth}
+      xs={tableWidth}
       sx={{
         border: `1px solid ${colors.backgroundColor[400]}`,
         borderRadius: "10px",
@@ -64,7 +119,7 @@ const RichListTable = ({ rows, title, subtitle, url }) => {
         boxShadow: `1px 2px ${colors.backgroundColor[900]}`,
         justifyContent: "start",
         display: "flex",
-        padding: "20px",
+
         flexDirection: "column",
         marginTop: "10px",
       }}
@@ -75,13 +130,14 @@ const RichListTable = ({ rows, title, subtitle, url }) => {
           justifyItems: "baseline",
           display: "flex",
           width: "100%",
+          padding: "20px",
         }}
       >
         <Box>
-          <Typography color={colors.primary[600]} fontSize="1.4rem">
+          <Typography color="#dee2e6" fontSize="1.2rem">
             {title}
           </Typography>
-          <Typography color={colors.grey[200]} fontSize="1rem">
+          <Typography color={"#ced4da"} fontSize="1rem">
             {subtitle}
           </Typography>
         </Box>
@@ -108,13 +164,20 @@ const RichListTable = ({ rows, title, subtitle, url }) => {
               <a
                 href={url}
                 target="_blank"
-                style={{ textDecoration: "none", color: colors.grey[100] }}
+                style={{
+                  textDecoration: "none",
+                  color: colors.grey[100],
+                  margin: 0,
+                }}
               >
                 Source Query
                 <LaunchOutlinedIcon sx={{ marginLeft: "10px" }} />
               </a>
             </MenuItem>
-            <MenuItem disabled>Chart Width</MenuItem>
+            <MenuItem disabled sx={{ justifyContent: "space-between" }}>
+              Chart Width
+              <WindowOutlinedIcon />
+            </MenuItem>
             <MenuItem
               sx={{
                 justifyContent: "space-between",
@@ -122,12 +185,12 @@ const RichListTable = ({ rows, title, subtitle, url }) => {
                 display: "flex",
               }}
               onClick={() => {
-                setChartWidth(5.8);
+                setTableWidth(5.8);
                 handleClose();
               }}
             >
               50%
-              {chartWidth === 5.8 && <CheckOutlinedIcon />}
+              {tableWidth === 5.8 && <CheckOutlinedIcon />}
             </MenuItem>
             <MenuItem
               sx={{
@@ -136,100 +199,27 @@ const RichListTable = ({ rows, title, subtitle, url }) => {
                 display: "flex",
               }}
               onClick={() => {
-                setChartWidth(11.6);
+                setTableWidth(11.6);
                 handleClose();
               }}
             >
               100%
-              {chartWidth === 11.6 && <CheckOutlinedIcon />}
+              {tableWidth === 11.6 && <CheckOutlinedIcon />}
             </MenuItem>
           </Menu>
         </Box>
       </Box>
-      <TableContainer
-        component={Paper}
-        sx={{
-          marginTop: "20px",
-        }}
-      >
-        <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-          <TableBody>
-            <TableRow
-              key="header"
-              sx={{
-                background: colors.primary[400],
-              }}
-            >
-              <TableCell
-                component="th"
-                scope="row"
-                sx={{ width: "70%", fontWeight: "regular", fontSize: "1.1rem" }}
-                align="left"
-              >
-                User
-              </TableCell>
-              <TableCell
-                sx={{ width: "30%", fontWeight: "regular", fontSize: "1.1rem" }}
-                align="left"
-              >
-                Balance (LUNA)
-              </TableCell>
-            </TableRow>
-            {(rowsPerPage > 0
-              ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              : rows
-            ).map((row, index) => (
-              <TableRow
-                key={row.USER}
-                sx={{
-                  background:
-                    index % 2 === 0 ? colors.grey[900] : "transparent",
-                }}
-              >
-                <TableCell
-                  component="th"
-                  scope="row"
-                  style={{ width: "70%" }}
-                  align="left"
-                >
-                  {row.USER}
-                </TableCell>
-                <TableCell style={{ width: "30%" }} align="left">
-                  {row.BALANCE ? row.BALANCE.toLocaleString("en-US") : null}
-                </TableCell>
-              </TableRow>
-            ))}
-
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={6} />
-              </TableRow>
-            )}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                colSpan={3}
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: {
-                    "aria-label": "rows per page",
-                  },
-                  native: true,
-                }}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
-              />
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </TableContainer>
+      <ThemeProvider theme={getMuiTheme}>
+        <MUIDataTable
+          title={null}
+          data={data}
+          columns={columns}
+          options={options}
+          style={{ width: "100%" }}
+        />
+      </ThemeProvider>
     </Grid>
   );
 };
 
-export default RichListTable;
+export default MyTable;

@@ -18,8 +18,8 @@ import {
   GavelOutlined as DevelopmentOutlinedIcon,
   InventoryOutlined as SupplyOutlinedIcon,
   PaymentsOutlined as TransactionOutlinedIcon,
-  LightModeOutlined as LightModeOutlinedIcon,
-  DarkModeOutlined as DarkModeOutlinedIcon,
+  Gavel as GovernanceIcon,
+  Savings as StakingIcon,
 } from "@mui/icons-material";
 import { ColorModeContext, tokens } from "../theme";
 import SidebarItem from "./SidebarItem";
@@ -167,9 +167,9 @@ const Sidebar = () => {
           />
 
           <SidebarItem
-            title={"Transactions"}
+            title={"Activity"}
             Icon={<TransactionOutlinedIcon />}
-            to="/transactions"
+            to="/activity"
             open={open}
             selected={selected}
             setSelected={setSelected}
@@ -194,9 +194,25 @@ const Sidebar = () => {
           />
 
           <SidebarItem
+            title={"Staking"}
+            Icon={<StakingIcon />}
+            to="/staking"
+            open={open}
+            selected={selected}
+            setSelected={setSelected}
+          />
+          <SidebarItem
             title={"Supply"}
             Icon={<SupplyOutlinedIcon />}
             to="/supply"
+            open={open}
+            selected={selected}
+            setSelected={setSelected}
+          />
+          <SidebarItem
+            title={"Governance"}
+            Icon={<GovernanceIcon />}
+            to="/governance"
             open={open}
             selected={selected}
             setSelected={setSelected}

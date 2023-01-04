@@ -1,4 +1,5 @@
 import { useTheme } from "@emotion/react";
+import { Box, Typography } from "@mui/material";
 import LineChart from "../../components/LineChart";
 import { tokens } from "../../theme";
 
@@ -17,6 +18,7 @@ const TerraPastSevenDaysHourlyPrice = ({ data }) => {
     plugins: {
       legend: {
         position: "top",
+        display: false,
       },
       title: {
         display: false,
@@ -24,6 +26,7 @@ const TerraPastSevenDaysHourlyPrice = ({ data }) => {
     },
     scales: {
       y: {
+        display: true,
         stacked: true,
         tick: {
           color: colors.redAccent[800],
@@ -34,12 +37,13 @@ const TerraPastSevenDaysHourlyPrice = ({ data }) => {
           color: colors.grey[600],
         },
         title: {
-          display: true,
+          display: false,
           color: colors.chartPalette[100],
-          text: "Prie (USD)",
+          text: "Price (USD)",
         },
       },
       x: {
+        display: false,
         stacked: true,
         grid: {
           display: false,
@@ -58,7 +62,33 @@ const TerraPastSevenDaysHourlyPrice = ({ data }) => {
       intersect: false,
     },
   };
-  return <LineChart chartData={data} options={options} />;
+  return (
+    <Box
+      sx={{
+        border: `1px solid ${colors.backgroundColor[400]}`,
+        borderRadius: "10px",
+        backgroundColor: colors.backgroundColor[400],
+        boxShadow: `1px 2px ${colors.backgroundColor[900]}`,
+        justifyContent: "start",
+        display: "flex",
+        padding: "20px",
+        flexDirection: "column",
+        marginTop: "10px",
+      }}
+    >
+      <Typography
+        sx={{
+          color: colors.grey[200],
+          fontSize: "1.4rem",
+          fontWeight: "bold",
+          marginBottom: "10px",
+        }}
+      >
+        Hourly Price
+      </Typography>
+      <LineChart chartData={data} options={options} />
+    </Box>
+  );
 };
 
 export default TerraPastSevenDaysHourlyPrice;

@@ -191,37 +191,20 @@ const Supply = () => {
     setStatusIBCPercent("loading");
     try {
       res = await http.get(apis.getIBCPercent);
-      console.log(res);
-      let labels = [];
-      let volumes = [];
-      res.map((data) => {
-        labels = [...labels, data.NETWORK];
-        volumes = [...volumes, data.VOLUME];
-      });
-      setDataIBCPercent({
-        labels: labels,
-        datasets: [
-          {
-            label: "# of Votes",
-            data: volumes,
-            backgroundColor: [
-              colors.chartPalette[100],
-              colors.chartPalette[200],
-              colors.chartPalette[300],
-              colors.chartPalette[400],
-              colors.chartPalette[500],
-              colors.chartPalette[600],
-              colors.chartPalette[700],
-              colors.chartPalette[800],
-              colors.chartPalette[900],
-            ],
 
-            borderWidth: 1,
+      let temp = [];
+      res.map((data, index) => {
+        temp = [
+          ...temp,
+          {
+            id: data.NETWORK,
+            label: data.NETWORK,
+            value: data.VOLUME.toFixed(2),
+            color: colors.chartPalette[(index + 1) * 100],
           },
-        ],
+        ];
       });
-      console.log(labels, volumes);
-      console.log(dataIBCPercent);
+      setDataIBCPercent(temp);
       setStatusIBCPercent("loaded");
     } catch (error) {
       console.log(error.message);

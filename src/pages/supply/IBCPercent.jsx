@@ -1,5 +1,6 @@
 import { useTheme } from "@mui/material";
 import BarChart from "../../components/BarChart";
+import PieChart from "../../components/PieChart";
 import { tokens } from "../../theme";
 
 const IBCPercent = ({ data }) => {
@@ -53,7 +54,7 @@ const IBCPercent = ({ data }) => {
     },
   };
 
-  return <BarChart chartData={data} options={options} />;
+  return <PieChart data={data} />;
 };
 
 export default IBCPercent;

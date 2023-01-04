@@ -427,11 +427,6 @@ const Supply = () => {
           getData={getWeeklyStakingRewardsDistributed}
           status={statusWeeklyStakingRewardsDistributed}
         />
-        <MyTable
-          data={richList}
-          columns={["user", "balance"]}
-          title="Rich List"
-        />
       </Grid>
     </Box>
   );

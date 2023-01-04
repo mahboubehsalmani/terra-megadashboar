@@ -2,7 +2,7 @@ import { useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import LineChart from "../../components/LineChart";
 
-const AverageBlockTimePerWeek = ({ data }) => {
+const AverageBlockTimePerWeek = ({ data, chartWidth, id }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -52,7 +52,14 @@ const AverageBlockTimePerWeek = ({ data }) => {
     },
   };
 
-  return <LineChart chartData={data} options={options} />;
+  return (
+    <LineChart
+      chartData={data}
+      options={options}
+      chartWidth={chartWidth}
+      id={id}
+    />
+  );
 };
 
 export default AverageBlockTimePerWeek;

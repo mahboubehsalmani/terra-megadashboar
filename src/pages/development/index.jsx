@@ -114,6 +114,7 @@ const Development = () => {
           status={loading}
           data={dataNewContractsDeployedEachWeek}
           getData={getNewContractsDeployedEachWeek}
+          id={"NewContractsDeployedEachWeek"}
         />
 
         <MyChart
@@ -123,6 +124,7 @@ const Development = () => {
           status={statusTotalContractsDeployedEachWeek}
           data={dataTotalContractsDeployedEachWeek}
           getData={getTotalContractsDeployedEachWeek}
+          id={"TotalContractsDeployedEachWeek"}
         />
 
         <MyChart
@@ -131,6 +133,7 @@ const Development = () => {
           url={
             "https://github.com/terra-money/core/graphs/commit-activity-data"
           }
+          id={"NumberOfCommitsPerWeek"}
         />
       </Grid>
     </Box>

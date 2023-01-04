@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { tokens } from "../../theme";
 import LineChart from "../../components/LineChart";
 
-const AverageTPSPerWeek = ({ data }) => {
+const AverageTPSPerWeek = ({ data, chartWidth, id }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -53,7 +53,14 @@ const AverageTPSPerWeek = ({ data }) => {
     },
   };
 
-  return <LineChart chartData={data} options={options} />;
+  return (
+    <LineChart
+      chartData={data}
+      options={options}
+      chartWidth={chartWidth}
+      id={id}
+    />
+  );
 };
 
 export default AverageTPSPerWeek;

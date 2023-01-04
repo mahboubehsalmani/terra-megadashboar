@@ -2,7 +2,7 @@ import { useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import LineChart from "../../components/LineChart";
 
-const NewContractsDeployedEachWeek = ({ data }) => {
+const NewContractsDeployedEachWeek = ({ data, id }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -47,7 +47,7 @@ const NewContractsDeployedEachWeek = ({ data }) => {
     },
   };
 
-  return <LineChart chartData={data} options={options} />;
+  return <LineChart chartData={data} options={options} id={id} />;
 };
 
 export default NewContractsDeployedEachWeek;

@@ -7,7 +7,7 @@ import {
   Gavel as GovernanceIcon,
   Savings as StakingIcon,
   AccountBalanceWalletOutlined as WalletOutlinedIcon,
-  GavelOutlined as DevelopmentOutlinedIcon,
+  ComputerOutlined as DevelopmentOutlinedIcon,
   InventoryOutlined as SupplyOutlinedIcon,
   PaymentsOutlined as TransactionOutlinedIcon,
 } from "@mui/icons-material";

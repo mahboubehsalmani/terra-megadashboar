@@ -6,7 +6,7 @@ import LineChart from "../../components/LineChart";
 import http from "../../services/http";
 import apis from "../../services/apis";
 
-const TotalTransactionFeesPerWeek = ({ data }) => {
+const TotalTransactionFeesPerWeek = ({ data, chartWidth, id }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -56,7 +56,14 @@ const TotalTransactionFeesPerWeek = ({ data }) => {
     },
   };
 
-  return <LineChart chartData={data} options={options} />;
+  return (
+    <LineChart
+      chartData={data}
+      options={options}
+      chartWidth={chartWidth}
+      id={id}
+    />
+  );
 };
 
 export default TotalTransactionFeesPerWeek;

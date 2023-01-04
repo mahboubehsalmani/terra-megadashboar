@@ -15,6 +15,7 @@ import {
   CheckOutlined as CheckOutlinedIcon,
   RefreshOutlined as RefreshOutlinedIcon,
   WindowOutlined as WindowOutlinedIcon,
+  DownloadOutlined as DownloadIcon,
 } from "@mui/icons-material";
 import { tokens } from "../theme";
 
@@ -27,6 +28,7 @@ const MyChart = ({
   data,
   url,
   defaultSize,
+  id,
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -39,6 +41,16 @@ const MyChart = ({
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleDownload = () => {
+    var a = document.createElement("a");
+    const chart = document.getElementById(id);
+    const myChart = chart.toDataURL("image/png");
+    a.href = myChart;
+
+    a.download = id + ".png";
+    a.click();
   };
 
   useEffect(() => {
@@ -92,6 +104,7 @@ const MyChart = ({
           >
             <SettingsOutlinedIcon />
           </IconButton>
+
           <Menu
             id="basic-menu"
             anchorEl={anchorEl}
@@ -114,6 +127,20 @@ const MyChart = ({
                 Source Query
                 <LaunchOutlinedIcon sx={{ marginLeft: "10px" }} />
               </a>
+            </MenuItem>
+
+            <MenuItem
+              onClick={handleDownload}
+              divider
+              sx={{
+                color: colors.grey[100],
+                justifyContent: "space-between ",
+                paddingTop: "10px",
+                paddingBottom: "10px",
+              }}
+            >
+              Download
+              <DownloadIcon sx={{ marginLeft: "10px" }} />
             </MenuItem>
             <MenuItem disabled sx={{ justifyContent: "space-between" }}>
               Chart Width
@@ -205,7 +232,7 @@ const MyChart = ({
           </IconButton>
         </Box>
       ) : (
-        <Chart data={data} />
+        <Chart data={data} chartWidth={chartWidth} id={id} />
       )}
     </Grid>
   );

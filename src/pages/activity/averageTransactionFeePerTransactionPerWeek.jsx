@@ -2,7 +2,11 @@ import { useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import LineChart from "../../components/LineChart";
 
-const AverageTransactionFeePerTransactionPerWeek = ({ data }) => {
+const AverageTransactionFeePerTransactionPerWeek = ({
+  data,
+  chartWidth,
+  id,
+}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -52,7 +56,14 @@ const AverageTransactionFeePerTransactionPerWeek = ({ data }) => {
     },
   };
 
-  return <LineChart chartData={data} options={options} />;
+  return (
+    <LineChart
+      chartData={data}
+      options={options}
+      chartWidth={chartWidth}
+      id={id}
+    />
+  );
 };
 
 export default AverageTransactionFeePerTransactionPerWeek;

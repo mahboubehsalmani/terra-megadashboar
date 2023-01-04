@@ -2,7 +2,7 @@ import { useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import LineChart from "../../components/LineChart";
 
-const TotalNumberOfTransactionsPerWeek = ({ data }) => {
+const TotalNumberOfTransactionsPerWeek = ({ data, chartWidth, id }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -54,7 +54,14 @@ const TotalNumberOfTransactionsPerWeek = ({ data }) => {
     },
   };
 
-  return <LineChart chartData={data} options={options} />;
+  return (
+    <LineChart
+      chartData={data}
+      options={options}
+      chartWidth={chartWidth}
+      id={id}
+    />
+  );
 };
 
 export default TotalNumberOfTransactionsPerWeek;

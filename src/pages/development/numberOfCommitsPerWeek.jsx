@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { tokens } from "../../theme";
 import NumberOfCommitsPerWeekData from "../../data/numberOfCommitsPerWeek";
 
-const NumberOfCommitsPerWeek = () => {
+const NumberOfCommitsPerWeek = ({ id }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState({
@@ -89,7 +89,7 @@ const NumberOfCommitsPerWeek = () => {
       intersect: false,
     },
   };
-  return <BarChart chartData={data} options={options} />;
+  return <BarChart chartData={data} options={options} id={id} />;
 };
 
 export default NumberOfCommitsPerWeek;

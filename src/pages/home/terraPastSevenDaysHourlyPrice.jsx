@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 import LineChart from "../../components/LineChart";
 import { tokens } from "../../theme";
 
-const TerraPastSevenDaysHourlyPrice = ({ data }) => {
+const TerraPastSevenDaysHourlyPrice = ({ data, chartWidth }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -86,7 +86,12 @@ const TerraPastSevenDaysHourlyPrice = ({ data }) => {
       >
         Hourly Price
       </Typography>
-      <LineChart chartData={data} options={options} />
+      <LineChart
+        chartData={data}
+        options={options}
+        chartWidth={chartWidth}
+        noPoint
+      />
     </Box>
   );
 };

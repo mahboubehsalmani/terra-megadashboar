@@ -15,7 +15,7 @@ import {
   ChevronRight as ChevronRightIcon,
   HomeOutlined as HomeOutlinedIcon,
   AccountBalanceWalletOutlined as WalletOutlinedIcon,
-  GavelOutlined as DevelopmentOutlinedIcon,
+  ComputerOutlined as DevelopmentOutlinedIcon,
   InventoryOutlined as SupplyOutlinedIcon,
   PaymentsOutlined as TransactionOutlinedIcon,
   Gavel as GovernanceIcon,

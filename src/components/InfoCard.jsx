@@ -25,16 +25,15 @@ const InfoCard = ({ title, info, source, status, getData, desc }) => {
         borderRadius: "10px",
         backgroundColor: colors.backgroundColor[400],
         boxShadow: `1px 2px ${colors.backgroundColor[900]}`,
-        justifyContent: "center",
+        // justifyContent: "center",
         display: "flex",
         padding: "20px",
         paddingTop: "8px",
         flexDirection: "column",
         marginTop: "10px",
         width: "100%",
-        maxHeight: "relative",
-        height: "max-content",
         alignItems: "start",
+        minHeight: "134px",
       }}
     >
       <Box
@@ -72,9 +71,10 @@ const InfoCard = ({ title, info, source, status, getData, desc }) => {
       >
         <Box
           sx={{
-            fontSize: "1.2rem",
+            fontSize: "1.6rem",
             fontWeight: "bold",
-            marginTop: "8px",
+            marginTop: "18px",
+            textAlign: "center",
             color: colors.chartPalette[100],
           }}
         >

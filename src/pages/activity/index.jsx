@@ -267,6 +267,9 @@ const Activity = () => {
         subtitle="Shows charst of transactions in terradash"
       />
       <Grid container gap={2}>
+        <Grid item xs={12}>
+          <Header title="Transaction Fee" />
+        </Grid>
         <Grid item xs={12} lg={8}>
           <Grid
             container
@@ -276,23 +279,70 @@ const Activity = () => {
             }}
           >
             <MyChart
-              title="Average Transaction Fee Per Transaction Per Week"
+              title="Average Transaction Fee Weekly"
               Chart={AverageTransactionFeePerTransactionPerWeek}
               url={apis.queryAverageTransactionFeePerTransactionPerWeek}
               status={statusAverageTransactionFeePerTransactionPerWeek}
               getData={getAverageTransactionFeePerTransactionPerWeek}
               data={dataAverageTransactionFeePerTransactionPerWeek}
+              id={"AverageTransactionFeePerTransactionPerWeek"}
             />
 
             <MyChart
-              title="Total Transaction Fees Per Week"
+              title="Total Transaction Fee Weekly"
               Chart={TotalTransactionFeesPerWeek}
               url={apis.queryTotalTransactionFeesPerWeek}
               status={statusTotalTransactionFeesPerWeek}
               getData={getTotalTransactionFeesPerWeek}
               data={dataTotalTransactionFeesPerWeek}
+              id={"TotalTransactionFeesPerWeek"}
             />
+          </Grid>
+        </Grid>
+        <Grid item xs={12} lg={3.8}>
+          <InfoCard
+            title="Total Transaction Fee"
+            source={sourceQuickData}
+            info={
+              quickData.TOTAL_FEE
+                ? quickData.TOTAL_FEE.toLocaleString("en-US")
+                : null
+            }
+            status={loadingStatus}
+            getData={getQuickData}
+          />
+          <InfoCard
+            title="Average Transaction Fee"
+            source={sourceQuickData}
+            info={
+              quickData.AVERAGE_FEE
+                ? quickData.AVERAGE_FEE.toLocaleString("en-US")
+                : null
+            }
+            status={loadingStatus}
+            getData={getQuickData}
+          />
+        </Grid>
+      </Grid>
 
+      <Grid container gap={2}>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            marginTop: "20px",
+          }}
+        >
+          <Header title="Transactions count" />
+        </Grid>
+        <Grid item xs={12} lg={8}>
+          <Grid
+            container
+            gap={2}
+            sx={{
+              justifyContent: "start",
+            }}
+          >
             <MyChart
               title="Total Number Of Transactions Per Week"
               Chart={TotalNumberOfTransactionsPerWeek}
@@ -300,25 +350,8 @@ const Activity = () => {
               status={statusTotalNumberOfTransactionsPerWeek}
               getData={getTotalNumberOfTransactionsPerWeek}
               data={dataTotalNumberOfTransactionsPerWeek}
+              id={"TotalNumberOfTransactionsPerWeek"}
               defaultSize={100}
-            />
-
-            <MyChart
-              title="Average Block Time Per Week"
-              Chart={AverageBlockTimePerWeek}
-              url={apis.queryAverageBlockTimePerWeek}
-              status={statusAverageBlockTimePerWeek}
-              getData={getAverageBlockTimePerWeek}
-              data={dataAverageBlockTimePerWeek}
-            />
-
-            <MyChart
-              title="Average TPS Per Week"
-              Chart={AverageTPSPerWeek}
-              url={apis.queryAverageTPSPerWeek}
-              status={statusAverageTPSPerWeek}
-              getData={getAverageTPSPerWeek}
-              data={dataAverageTPSPerWeek}
             />
           </Grid>
         </Grid>
@@ -330,7 +363,7 @@ const Activity = () => {
             }}
           >
             <InfoCard
-              title="Total No. of Transactions"
+              title="Number of Transactions"
               source={sourceQuickData}
               info={
                 quickData.TOTAL_TRANSACTIONS
@@ -341,29 +374,7 @@ const Activity = () => {
               getData={getQuickData}
             />
             <InfoCard
-              title="Total Fee of Transactions"
-              source={sourceQuickData}
-              info={
-                quickData.TOTAL_FEE
-                  ? quickData.TOTAL_FEE.toLocaleString("en-US")
-                  : null
-              }
-              status={loadingStatus}
-              getData={getQuickData}
-            />
-            <InfoCard
-              title="Average of Fees of Transactions"
-              source={sourceQuickData}
-              info={
-                quickData.AVERAGE_FEE
-                  ? quickData.AVERAGE_FEE.toLocaleString("en-US")
-                  : null
-              }
-              status={loadingStatus}
-              getData={getQuickData}
-            />
-            <InfoCard
-              title="Total Users"
+              title="Number of transaction senders"
               source={sourceQuickData}
               info={
                 quickData.USERS ? quickData.USERS.toLocaleString("en-US") : null
@@ -371,12 +382,71 @@ const Activity = () => {
               status={loadingStatus}
               getData={getQuickData}
             />
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Grid container gap={2}>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            marginTop: "20px",
+          }}
+        >
+          <Header title="TPS and block time" />
+        </Grid>
+        <Grid item xs={12} lg={8}>
+          <Grid
+            container
+            gap={2}
+            sx={{
+              justifyContent: "start",
+            }}
+          >
+            <MyChart
+              title="Average Block Time Per Week"
+              Chart={AverageBlockTimePerWeek}
+              url={apis.queryAverageBlockTimePerWeek}
+              status={statusAverageBlockTimePerWeek}
+              getData={getAverageBlockTimePerWeek}
+              data={dataAverageBlockTimePerWeek}
+              id={"AverageBlockTimePerWeek"}
+            />
+
+            <MyChart
+              title="Average TPS Per Week"
+              Chart={AverageTPSPerWeek}
+              url={apis.queryAverageTPSPerWeek}
+              status={statusAverageTPSPerWeek}
+              getData={getAverageTPSPerWeek}
+              data={dataAverageTPSPerWeek}
+              id="AverageTPSPerWeek"
+            />
+          </Grid>
+        </Grid>
+        <Grid item xs={12} lg={3.8}>
+          <Grid
+            container
+            sx={{
+              width: "100%",
+            }}
+          >
             <InfoCard
-              title="Total TPS"
+              title="Number of blocks"
               source={sourceQuickData}
               info={
-                quickData.TPS ? quickData.TPS.toLocaleString("en-US") : null
+                quickData.TOTAL_BLOCKS
+                  ? quickData.TOTAL_BLOCKS.toLocaleString("en-US")
+                  : null
               }
+              status={loadingStatus}
+              getData={getQuickData}
+            />
+            <InfoCard
+              title="Average TPS"
+              source={sourceQuickData}
+              info={quickData.TPS ? quickData.TPS.toFixed(2) : null}
               status={loadingStatus}
               getData={getQuickData}
             />

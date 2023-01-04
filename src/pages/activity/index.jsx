@@ -266,114 +266,122 @@ const Activity = () => {
         title="Transactions"
         subtitle="Shows charst of transactions in terradash"
       />
-      <Grid
-        container
-        gap={2}
-        sx={{
-          width: "100%",
-        }}
-      >
-        <InfoCard
-          title="Total No. of Transactions"
-          source={sourceQuickData}
-          info={
-            quickData.TOTAL_TRANSACTIONS
-              ? quickData.TOTAL_TRANSACTIONS.toLocaleString("en-US")
-              : null
-          }
-          status={loadingStatus}
-          getData={getQuickData}
-        />
-        <InfoCard
-          title="Total Fee of Transactions"
-          source={sourceQuickData}
-          info={
-            quickData.TOTAL_FEE
-              ? quickData.TOTAL_FEE.toLocaleString("en-US")
-              : null
-          }
-          status={loadingStatus}
-          getData={getQuickData}
-        />
-        <InfoCard
-          title="Average of Fees of Transactions"
-          source={sourceQuickData}
-          info={
-            quickData.AVERAGE_FEE
-              ? quickData.AVERAGE_FEE.toLocaleString("en-US")
-              : null
-          }
-          status={loadingStatus}
-          getData={getQuickData}
-        />
-        <InfoCard
-          title="Total Users"
-          source={sourceQuickData}
-          info={
-            quickData.USERS ? quickData.USERS.toLocaleString("en-US") : null
-          }
-          status={loadingStatus}
-          getData={getQuickData}
-        />
-        <InfoCard
-          title="Total TPS"
-          source={sourceQuickData}
-          info={quickData.TPS ? quickData.TPS.toLocaleString("en-US") : null}
-          status={loadingStatus}
-          getData={getQuickData}
-        />
-      </Grid>
-      <Grid
-        container
-        gap={2}
-        sx={{
-          justifyContent: "start",
-        }}
-      >
-        <MyChart
-          title="Average Transaction Fee Per Transaction Per Week"
-          Chart={AverageTransactionFeePerTransactionPerWeek}
-          url={apis.queryAverageTransactionFeePerTransactionPerWeek}
-          status={statusAverageTransactionFeePerTransactionPerWeek}
-          getData={getAverageTransactionFeePerTransactionPerWeek}
-          data={dataAverageTransactionFeePerTransactionPerWeek}
-        />
+      <Grid container gap={2}>
+        <Grid item xs={12} lg={8}>
+          <Grid
+            container
+            gap={2}
+            sx={{
+              justifyContent: "start",
+            }}
+          >
+            <MyChart
+              title="Average Transaction Fee Per Transaction Per Week"
+              Chart={AverageTransactionFeePerTransactionPerWeek}
+              url={apis.queryAverageTransactionFeePerTransactionPerWeek}
+              status={statusAverageTransactionFeePerTransactionPerWeek}
+              getData={getAverageTransactionFeePerTransactionPerWeek}
+              data={dataAverageTransactionFeePerTransactionPerWeek}
+            />
 
-        <MyChart
-          title="Average Block Time Per Week"
-          Chart={AverageBlockTimePerWeek}
-          url={apis.queryAverageBlockTimePerWeek}
-          status={statusAverageBlockTimePerWeek}
-          getData={getAverageBlockTimePerWeek}
-          data={dataAverageBlockTimePerWeek}
-        />
+            <MyChart
+              title="Total Transaction Fees Per Week"
+              Chart={TotalTransactionFeesPerWeek}
+              url={apis.queryTotalTransactionFeesPerWeek}
+              status={statusTotalTransactionFeesPerWeek}
+              getData={getTotalTransactionFeesPerWeek}
+              data={dataTotalTransactionFeesPerWeek}
+            />
 
-        <MyChart
-          title="Average TPS Per Week"
-          Chart={AverageTPSPerWeek}
-          url={apis.queryAverageTPSPerWeek}
-          status={statusAverageTPSPerWeek}
-          getData={getAverageTPSPerWeek}
-          data={dataAverageTPSPerWeek}
-        />
+            <MyChart
+              title="Total Number Of Transactions Per Week"
+              Chart={TotalNumberOfTransactionsPerWeek}
+              url={apis.queryTotalNumberOfTransactionsPerWeek}
+              status={statusTotalNumberOfTransactionsPerWeek}
+              getData={getTotalNumberOfTransactionsPerWeek}
+              data={dataTotalNumberOfTransactionsPerWeek}
+              defaultSize={100}
+            />
 
-        <MyChart
-          title="Total Number Of Transactions Per Week"
-          Chart={TotalNumberOfTransactionsPerWeek}
-          url={apis.queryTotalNumberOfTransactionsPerWeek}
-          status={statusTotalNumberOfTransactionsPerWeek}
-          getData={getTotalNumberOfTransactionsPerWeek}
-          data={dataTotalNumberOfTransactionsPerWeek}
-        />
+            <MyChart
+              title="Average Block Time Per Week"
+              Chart={AverageBlockTimePerWeek}
+              url={apis.queryAverageBlockTimePerWeek}
+              status={statusAverageBlockTimePerWeek}
+              getData={getAverageBlockTimePerWeek}
+              data={dataAverageBlockTimePerWeek}
+            />
 
-        <MyChart
-          title="Total Transaction Fees Per Week"
-          Chart={TotalTransactionFeesPerWeek}
-          url={apis.queryTotalTransactionFeesPerWeek}
-          status={statusTotalTransactionFeesPerWeek}
-          getData={getTotalTransactionFeesPerWeek}
-          data={dataTotalTransactionFeesPerWeek}
-        />
+            <MyChart
+              title="Average TPS Per Week"
+              Chart={AverageTPSPerWeek}
+              url={apis.queryAverageTPSPerWeek}
+              status={statusAverageTPSPerWeek}
+              getData={getAverageTPSPerWeek}
+              data={dataAverageTPSPerWeek}
+            />
+          </Grid>
+        </Grid>
+        <Grid item xs={12} lg={3.8}>
+          <Grid
+            container
+            sx={{
+              width: "100%",
+            }}
+          >
+            <InfoCard
+              title="Total No. of Transactions"
+              source={sourceQuickData}
+              info={
+                quickData.TOTAL_TRANSACTIONS
+                  ? quickData.TOTAL_TRANSACTIONS.toLocaleString("en-US")
+                  : null
+              }
+              status={loadingStatus}
+              getData={getQuickData}
+            />
+            <InfoCard
+              title="Total Fee of Transactions"
+              source={sourceQuickData}
+              info={
+                quickData.TOTAL_FEE
+                  ? quickData.TOTAL_FEE.toLocaleString("en-US")
+                  : null
+              }
+              status={loadingStatus}
+              getData={getQuickData}
+            />
+            <InfoCard
+              title="Average of Fees of Transactions"
+              source={sourceQuickData}
+              info={
+                quickData.AVERAGE_FEE
+                  ? quickData.AVERAGE_FEE.toLocaleString("en-US")
+                  : null
+              }
+              status={loadingStatus}
+              getData={getQuickData}
+            />
+            <InfoCard
+              title="Total Users"
+              source={sourceQuickData}
+              info={
+                quickData.USERS ? quickData.USERS.toLocaleString("en-US") : null
+              }
+              status={loadingStatus}
+              getData={getQuickData}
+            />
+            <InfoCard
+              title="Total TPS"
+              source={sourceQuickData}
+              info={
+                quickData.TPS ? quickData.TPS.toLocaleString("en-US") : null
+              }
+              status={loadingStatus}
+              getData={getQuickData}
+            />
+          </Grid>
+        </Grid>
       </Grid>
     </Box>
   );

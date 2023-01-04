@@ -20,12 +20,10 @@ const InfoCard = ({ title, info, source, status, getData, desc }) => {
     <Grid
       item
       xs={12}
-      lg="3.8"
-      md="5.7"
       sx={{
-        border: `1px solid ${colors.secondaryBackground[400]}`,
+        border: `1px solid ${colors.backgroundColor[400]}`,
         borderRadius: "10px",
-        backgroundColor: colors.secondaryBackground[300],
+        backgroundColor: colors.backgroundColor[400],
         boxShadow: `1px 2px ${colors.backgroundColor[900]}`,
         justifyContent: "center",
         display: "flex",
@@ -43,9 +41,11 @@ const InfoCard = ({ title, info, source, status, getData, desc }) => {
         sx={{
           display: "flex",
           flexDirection: "row",
+          justifyContent: "space-between",
+          marginTop: "10px",
         }}
       >
-        <Typography fontSize={"1.1rem"} color={"#dee2e6"}>
+        <Typography fontSize={"1.2rem"} color={"#dee2e6"}>
           {title}
         </Typography>
         <a
@@ -72,7 +72,7 @@ const InfoCard = ({ title, info, source, status, getData, desc }) => {
       >
         <Box
           sx={{
-            fontSize: "2rem",
+            fontSize: "1.2rem",
             fontWeight: "bold",
             marginTop: "8px",
             color: colors.chartPalette[100],

@@ -43,10 +43,10 @@ const MyChart = ({
 
   useEffect(() => {
     if (defaultSize) {
-      defaultSize === 100 ? setChartWidth(11.6) : setChartWidth(5.8);
+      defaultSize === 100 ? setChartWidth(11.8) : setChartWidth(5.8);
     } else {
       const width = window.innerWidth;
-      width > 1200 ? setChartWidth(5.8) : setChartWidth(11.6);
+      width > 1200 ? setChartWidth(5.8) : setChartWidth(11.8);
     }
   }, []);
 
@@ -140,12 +140,12 @@ const MyChart = ({
                 display: "flex",
               }}
               onClick={() => {
-                setChartWidth(11.6);
+                setChartWidth(11.8);
                 handleClose();
               }}
             >
               100%
-              {chartWidth === 11.6 && <CheckOutlinedIcon />}
+              {chartWidth === 11.8 && <CheckOutlinedIcon />}
             </MenuItem>
           </Menu>
         </Box>

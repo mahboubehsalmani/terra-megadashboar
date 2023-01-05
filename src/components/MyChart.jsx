@@ -114,34 +114,38 @@ const MyChart = ({
               "aria-labelledby": "basic-button",
             }}
           >
-            <MenuItem onClick={handleClose} divider={true}>
-              <a
-                href={url}
-                target="_blank"
-                style={{
-                  textDecoration: "none",
+            {url && (
+              <MenuItem onClick={handleClose} divider={true}>
+                <a
+                  href={url}
+                  target="_blank"
+                  style={{
+                    textDecoration: "none",
+                    color: colors.grey[100],
+                    margin: 0,
+                  }}
+                >
+                  Source Query
+                  <LaunchOutlinedIcon sx={{ marginLeft: "10px" }} />
+                </a>
+              </MenuItem>
+            )}
+
+            {id && (
+              <MenuItem
+                onClick={handleDownload}
+                divider
+                sx={{
                   color: colors.grey[100],
-                  margin: 0,
+                  justifyContent: "space-between ",
+                  paddingTop: "10px",
+                  paddingBottom: "10px",
                 }}
               >
-                Source Query
-                <LaunchOutlinedIcon sx={{ marginLeft: "10px" }} />
-              </a>
-            </MenuItem>
-
-            <MenuItem
-              onClick={handleDownload}
-              divider
-              sx={{
-                color: colors.grey[100],
-                justifyContent: "space-between ",
-                paddingTop: "10px",
-                paddingBottom: "10px",
-              }}
-            >
-              Download
-              <DownloadIcon sx={{ marginLeft: "10px" }} />
-            </MenuItem>
+                Download
+                <DownloadIcon sx={{ marginLeft: "10px" }} />
+              </MenuItem>
+            )}
             <MenuItem disabled sx={{ justifyContent: "space-between" }}>
               Chart Width
               <WindowOutlinedIcon />

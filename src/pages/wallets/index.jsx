@@ -284,6 +284,11 @@ const Wallets = () => {
             columns={["label", "totalStake", "addressBalance", "totalBalance"]}
             title="Rich List"
             defaultSize={100}
+            pagination
+            download
+            sort
+            search
+            viewColumns
           />
         </Grid>
       </Grid>

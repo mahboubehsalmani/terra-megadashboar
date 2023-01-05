@@ -19,7 +19,19 @@ import {
   WindowOutlined as WindowOutlinedIcon,
 } from "@mui/icons-material";
 
-const MyTable = ({ data, columns, title, subtitle, url, defaultSize }) => {
+const MyTable = ({
+  data,
+  columns,
+  title,
+  subtitle,
+  url,
+  defaultSize,
+  pagination,
+  download,
+  sort,
+  search,
+  viewColumns,
+}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -48,6 +60,11 @@ const MyTable = ({ data, columns, title, subtitle, url, defaultSize }) => {
     filter: false,
     print: false,
     jumpToPage: false,
+    pagination: pagination,
+    download: download,
+    sort: sort,
+    search: search,
+    viewColumns: viewColumns,
   };
 
   const getMuiTheme = () =>
@@ -154,20 +171,22 @@ const MyTable = ({ data, columns, title, subtitle, url, defaultSize }) => {
               "aria-labelledby": "basic-button",
             }}
           >
-            <MenuItem onClick={handleClose} divider={true}>
-              <a
-                href={url}
-                target="_blank"
-                style={{
-                  textDecoration: "none",
-                  color: colors.grey[100],
-                  margin: 0,
-                }}
-              >
-                Source Query
-                <LaunchOutlinedIcon sx={{ marginLeft: "10px" }} />
-              </a>
-            </MenuItem>
+            {url && (
+              <MenuItem onClick={handleClose} divider={true}>
+                <a
+                  href={url}
+                  target="_blank"
+                  style={{
+                    textDecoration: "none",
+                    color: colors.grey[100],
+                    margin: 0,
+                  }}
+                >
+                  Source Query
+                  <LaunchOutlinedIcon sx={{ marginLeft: "10px" }} />
+                </a>
+              </MenuItem>
+            )}
             <MenuItem disabled sx={{ justifyContent: "space-between" }}>
               Chart Width
               <WindowOutlinedIcon />

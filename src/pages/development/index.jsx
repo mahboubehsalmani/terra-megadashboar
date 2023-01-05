@@ -220,7 +220,6 @@ const Development = () => {
           status={statusMostUsedContracts}
           data={dataMostUsedContracts}
           getData={getMostUsedContracts}
-          id={"MostUsedContracts"}
         />
       </Grid>
 

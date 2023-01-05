@@ -13,7 +13,7 @@ import IBCPercent from "./IBCPercent";
 import MyTable from "../../components/MaterialTable";
 import Header from "../../components/Header";
 
-const Supply = () => {
+const Staking = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [richList, setRichList] = useState([]);
@@ -429,53 +429,24 @@ const Supply = () => {
           getData={getIBC}
           status={statusIBC}
         />
-      </Grid>
 
-      <Grid container gap={2}>
-        <Grid item xs={12}>
-          <Header
-            title="Vesting schedule"
-            subtitle="This section includes data about the vesting schedule for the LUNA airdrop,
-           which is a distribution of LUNA tokens to the community. The vesting schedule determines 
-           the release of the airdropped tokens over a certain period of time,
-           typically with a certain percentage released at a time."
-          />
-        </Grid>
-
-        <Grid item xs={12}>
-          <MyTable
-            columns={["Quantity Held in Wallet", "Airdrop Allocation"]}
-            data={[
-              [
-                "< 10K LUNC (LUNA Classic)",
-
-                "30% upfront, with the remaining 70% vesting monthly over 24 months from December 2022.",
-              ],
-
-              [
-                "> 10K LUNC (LUNA Classic) to < 1M LUNC (LUNA Classic)",
-
-                "Monthly vesting over 24 months from June 2023.",
-              ],
-
-              [
-                "> 1M LUNC (LUNA Classic)",
-
-                "Monthly vesting over 48 months from June 2023.",
-              ],
-            ]}
-            title="Vesting schedule"
-            pagination={false}
-            download={false}
-            sort={false}
-            search={false}
-            viewColumns={false}
-            defaultSize={100}
-          />
-        </Grid>
+        <MyChart
+          title="Weekly Staking"
+          Chart={WeeklyStaking}
+          data={dataWeeklyStaking}
+          getData={getWeeklyStaking}
+          status={StatusWeeklyStaking}
+        />
+        <MyChart
+          title="Weekly Staking Reward Distributed"
+          Chart={WeeklyStakingRewardsDistributed}
+          data={dataWeeklyStakingRewardsDistributed}
+          getData={getWeeklyStakingRewardsDistributed}
+          status={statusWeeklyStakingRewardsDistributed}
+        />
       </Grid>
     </Box>
   );
 };
 
-export default Supply;
+export default Staking;

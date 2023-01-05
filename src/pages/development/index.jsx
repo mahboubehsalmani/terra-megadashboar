@@ -10,6 +10,7 @@ import NumberOfCommitsPerWeek from "./numberOfCommitsPerWeek";
 import TotalContractsDeployedEachWeek from "./totalContractsDeployedEachWeek";
 import ActiveContractsWeekly from "./activeContractsWeekly";
 import MostUsedContracts from "./mostUsedContracts";
+import CodeFrequency from "./CodeFrequency";
 
 const Development = () => {
   const theme = useTheme();
@@ -244,6 +245,13 @@ const Development = () => {
             "https://github.com/terra-money/core/graphs/commit-activity-data"
           }
           id={"NumberOfCommitsPerWeek"}
+        />
+
+        <MyChart
+          title="code frequency"
+          Chart={CodeFrequency}
+          url={"https://github.com/terra-money/core/graphs/code-frequency"}
+          id={"CodeFrequency"}
         />
       </Grid>
     </Box>

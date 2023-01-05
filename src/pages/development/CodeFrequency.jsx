@@ -1,21 +1,30 @@
 import BarChart from "../../components/BarChart";
-import { Box, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { tokens } from "../../theme";
-import NumberOfCommitsPerWeekData from "../../data/numberOfCommitsPerWeek";
+import CodeFreq from "../../data/codeFreq";
 
-const NumberOfCommitsPerWeek = ({ id }) => {
+const CodeFrequency = ({ id }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState({
     labels: [],
     datasets: [
       {
-        label: "Commits",
+        label: "Added",
         data: [],
-        backgroundColor: [colors.secondary[400]],
-        borderColor: colors.secondary[500],
+        backgroundColor: "#0a9396",
+        borderColor: "#0a9396",
         borderWidth: 1,
+        type: "bar",
+      },
+      {
+        label: "Removed",
+        data: [],
+        backgroundColor: "#9b2226",
+        borderColor: "#9b2226",
+        borderWidth: 1,
+        type: "bar",
       },
     ],
   });
@@ -24,21 +33,32 @@ const NumberOfCommitsPerWeek = ({ id }) => {
   }, []);
   const getNumberOfCommitsPerWeek = () => {
     let dates = [];
-    let total = [];
-    NumberOfCommitsPerWeekData.map((data) => {
-      const date = new Date(data.week * 1000).toLocaleDateString("en-US");
+    let pos = [];
+    let neg = [];
+    CodeFreq.map((data) => {
+      const date = new Date(data[0] * 1000).toLocaleDateString("en-US");
       dates = [...dates, date];
-      total = [...total, data.total];
+      pos = [...pos, data[1]];
+      neg = [...neg, data[2]];
     });
     setData({
       labels: dates,
       datasets: [
         {
-          label: "Commits",
-          data: total,
-          backgroundColor: [colors.secondary[400]],
-          borderColor: colors.secondary[500],
+          label: "Added",
+          data: pos,
+          backgroundColor: "#0a9396",
+          borderColor: "#0a9396",
           borderWidth: 1,
+          type: "bar",
+        },
+        {
+          label: "Removed",
+          data: neg,
+          backgroundColor: "#9b2226",
+          borderColor: "#9b2226",
+          borderWidth: 1,
+          type: "bar",
         },
       ],
     });
@@ -68,7 +88,7 @@ const NumberOfCommitsPerWeek = ({ id }) => {
         title: {
           display: true,
           color: colors.secondary[400],
-          text: "Number of commits",
+          text: "Number of lines",
         },
       },
       x: {
@@ -92,4 +112,4 @@ const NumberOfCommitsPerWeek = ({ id }) => {
   return <BarChart chartData={data} options={options} id={id} />;
 };
 
-export default NumberOfCommitsPerWeek;
+export default CodeFrequency;

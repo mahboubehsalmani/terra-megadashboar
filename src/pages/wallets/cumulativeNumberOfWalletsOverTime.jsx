@@ -5,7 +5,7 @@ import LineChart from "../../components/LineChart";
 import http from "../../services/http";
 import apis from "../../services/apis";
 
-const CumulativeNumberOfWalletsOverTime = () => {
+const CumulativeNumberOfWalletsOverTime = ({ chartWidth }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState({
@@ -92,7 +92,9 @@ const CumulativeNumberOfWalletsOverTime = () => {
     },
   };
 
-  return <LineChart chartData={data} options={options} />;
+  return (
+    <LineChart chartData={data} options={options} chartWidth={chartWidth} />
+  );
 };
 
 export default CumulativeNumberOfWalletsOverTime;

@@ -235,7 +235,13 @@ const Supply = () => {
         </Grid>
       </Grid>
 
-      <Grid container gap={2} sx={{ marginTop: "20px" }}>
+      <Grid
+        container
+        gap={2}
+        sx={{
+          marginTop: "80px",
+        }}
+      >
         <Grid item xs={12}>
           <Header
             title="IBC"
@@ -264,7 +270,13 @@ const Supply = () => {
         />
       </Grid>
 
-      <Grid container gap={2}>
+      <Grid
+        container
+        gap={2}
+        sx={{
+          marginTop: "80px",
+        }}
+      >
         <Grid item xs={12}>
           <Header
             title="Vesting schedule"

@@ -223,14 +223,14 @@ const Development = () => {
         />
       </Grid>
 
-      <Grid container gap={2}>
-        <Grid
-          item
-          xs={12}
-          sx={{
-            marginTop: "28px",
-          }}
-        >
+      <Grid
+        container
+        gap={2}
+        sx={{
+          marginTop: "80px",
+        }}
+      >
+        <Grid item xs={12}>
           <Header
             title="Github development"
             subtitle=" This section includes data about the development activity on the Terra Github repository."

@@ -263,12 +263,16 @@ const Activity = () => {
   return (
     <Box sx={{ padding: "20px" }}>
       <Header
-        title="Transactions"
-        subtitle="Shows charst of transactions in terradash"
+        title="Activity"
+        subtitle="Activity on the Terra network refers to the various actions and transactions that take place on the blockchain,
+         such as transfers of funds, smart contract executions, and voting on governance proposals."
       />
       <Grid container gap={2}>
         <Grid item xs={12}>
-          <Header title="Transaction Fee" />
+          <Header
+            title="Transaction Fee"
+            subtitle="This metric tracks the average fee paid per transaction on the Terra network."
+          />
         </Grid>
         <Grid item xs={12} lg={8}>
           <Grid
@@ -325,15 +329,19 @@ const Activity = () => {
         </Grid>
       </Grid>
 
-      <Grid container gap={2}>
-        <Grid
-          item
-          xs={12}
-          sx={{
-            marginTop: "20px",
-          }}
-        >
-          <Header title="Transactions count" />
+      <Grid
+        container
+        gap={2}
+        sx={{
+          marginTop: "80px",
+        }}
+      >
+        <Grid item xs={12}>
+          <Header
+            title="Transactions count"
+            subtitle="This metric counts the total number of transactions that have taken place on the Terra network over a given time period.
+          "
+          />
         </Grid>
         <Grid item xs={12} lg={8}>
           <Grid
@@ -386,15 +394,21 @@ const Activity = () => {
         </Grid>
       </Grid>
 
-      <Grid container gap={2}>
-        <Grid
-          item
-          xs={12}
-          sx={{
-            marginTop: "20px",
-          }}
-        >
-          <Header title="TPS and block time" />
+      <Grid
+        container
+        gap={2}
+        sx={{
+          marginTop: "80px",
+        }}
+      >
+        <Grid item xs={12}>
+          <Header
+            title="TPS and block time"
+            subtitle="TPS (transactions per second) measures the speed at which transactions 
+          are processed on the Terra network, while block time refers to the average time 
+          it takes for a new block to be added to the blockchain. Together,
+           these metrics can give an indication of the overall performance and efficiency of the network."
+          />
         </Grid>
         <Grid item xs={12} lg={8}>
           <Grid

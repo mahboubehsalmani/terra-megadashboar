@@ -1,5 +1,4 @@
 import { Box, Grid, useTheme } from "@mui/material";
-import RichBox from "./richBox";
 import WeeklyStaking from "./weeklyStaking";
 import MyChart from "../../components/MyChart";
 import { useEffect, useState } from "react";
@@ -8,18 +7,31 @@ import http from "../../services/http";
 import apis from "../../services/apis";
 import WeeklyStakingRewardsDistributed from "./weeklyStakingRewardsDistributed";
 import InfoCard from "../../components/InfoCard";
-import IBC from "./IBC";
-import IBCPercent from "./IBCPercent";
-import MyTable from "../../components/MaterialTable";
 import Header from "../../components/Header";
+import StakingActionDistributionCount from "./stakingActionDistributionCount";
+import StakingActionDistributionVolume from "./StakingActionDistributionVolume";
+import WeeklyStakingCount from "./weeklyStakingCount";
 
 const Staking = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [richList, setRichList] = useState([]);
+
+  const [quickReward, setQuickReward] = useState(null);
+  const [statusQuickReward, setStatusQuickReward] = useState("loading");
+  const [
+    dataStakingActionDistributionVolume,
+    setDataStakingActionDistributionVolume,
+  ] = useState([]);
+  const [
+    dataStakingActionDistributionCount,
+    setDataStakingActionDistributionCount,
+  ] = useState([]);
+  const [statusStakingActionDistribution, setStatusStakingActionDistribution] =
+    useState("loading");
   const [StatusWeeklyStaking, setStatusWeeklyStaking] = useState("loading");
-  const [statusIBC, setStatusIBC] = useState("loading");
-  const [statusIBCPercent, setStatusIBCPercent] = useState("loading");
+  const [statusTotalSupply, setStatusTotalSupply] = useState("loading");
+  const [statusTotalLunaStaked, setStatusTotalLunaStaked] = useState("loading");
+  const [dataTotalLunaStaked, setDataTotalLunaStaked] = useState(null);
   const [dataTotalSupply, setDataTotalSupply] = useState(null);
   const [dataCirculatingSupply, setDataCirculatingSupply] = useState(null);
   const [dataTotalPercentStakedLUNA, setDataTotalPercentStakedLUNA] =
@@ -49,6 +61,19 @@ const Staking = () => {
     ],
   });
 
+  const [dataWeeklyStakingCount, setDataWeeklyStakingCount] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: "Average",
+        data: [],
+        backgroundColor: [colors.secondary[400]],
+        borderColor: colors.secondary[500],
+        borderWidth: 1,
+      },
+    ],
+  });
+
   const [
     dataWeeklyStakingRewardsDistributed,
     setDataWeeklyStakingRewardsDistributed,
@@ -65,151 +90,79 @@ const Staking = () => {
     ],
   });
 
-  const [dataIBC, setDataIBC] = useState({
-    labels: [],
-    datasets: [
-      {
-        label: "Average",
-        data: [],
-        backgroundColor: [colors.secondary[400]],
-        borderColor: colors.secondary[500],
-        borderWidth: 1,
-      },
-    ],
-  });
-
-  const [dataIBCPercent, setDataIBCPercent] = useState({
-    labels: [],
-    datasets: [
-      {
-        label: "Average",
-        data: [],
-        backgroundColor: [colors.secondary[400]],
-        borderColor: colors.secondary[500],
-        borderWidth: 1,
-      },
-    ],
-  });
-
   useEffect(() => {
-    getIBC();
     getWeeklyStaking();
     getWeeklyStakingRewardsDistributed();
-    getRichList();
-    getTotalAndCirculatingSupply();
     getTotalNumberOfStakedLUNA();
-    getIBCPercent();
+    getStakingActionDistribution();
+    getQuickReward();
+    getTotalSupply();
+    getTotalLunaStaked();
   }, []);
 
   useEffect(() => {
     getTotalPercentofStakedLUNA();
   }, [dataTotalSupply, dataTotalNumberOfStakedLUNA]);
 
-  const getIBC = async () => {
-    let res = [];
-    setStatusIBC("loading");
+  const getQuickReward = async () => {
+    setStatusQuickReward("loading");
     try {
-      res = await http.get(apis.getIBC);
-      let _osmo = [];
-      let _secret = [];
-      let _CRE = [];
-      let _SIF = [];
-      let _kujira = [];
-      let _cosmos = [];
-      let _juno = [];
-      let _others = [];
-      await res.map((data) => {
-        if (data.BLOCKCHAIN === "osmo") _osmo = [..._osmo, data];
-        else if (data.BLOCKCHAIN === "secret") _secret = [..._secret, data];
-        else if (data.BLOCKCHAIN === "CRE") _CRE = [..._CRE, data];
-        else if (data.BLOCKCHAIN === "SIF") _SIF = [..._SIF, data];
-        else if (data.BLOCKCHAIN === "kujira") _kujira = [..._kujira, data];
-        else if (data.BLOCKCHAIN === "cosmos") _cosmos = [..._cosmos, data];
-        else if (data.BLOCKCHAIN === "juno") _juno = [..._juno, data];
-        else _others = [..._others, data];
-      });
-      setDataIBC({
-        labels: _osmo.map((data) => data.WEEK),
-        datasets: [
-          {
-            label: "Osmo",
-            data: _osmo.map((data) => data.VOLUME),
-            backgroundColor: colors.chartPalette[100],
-            stack: "base",
-          },
-          {
-            label: "kujira",
-            data: _kujira.map((data) => data.VOLUME),
-            backgroundColor: colors.chartPalette[200],
-            stack: "base",
-          },
-          {
-            label: "cosmos",
-            data: _cosmos.map((data) => data.VOLUME),
-            backgroundColor: colors.chartPalette[300],
-            stack: "base",
-          },
-          {
-            label: "secret",
-            data: _secret.map((data) => data.VOLUME),
-            backgroundColor: colors.chartPalette[400],
-            stack: "base",
-          },
-          {
-            label: "CRE",
-            data: _CRE.map((data) => data.VOLUME),
-            backgroundColor: colors.chartPalette[500],
-            stack: "base",
-          },
-          {
-            label: "SIF",
-            data: _SIF.map((data) => data.VOLUME),
-            backgroundColor: colors.chartPalette[700],
-            stack: "base",
-          },
-          {
-            label: "juno",
-            data: _juno.map((data) => data.VOLUME),
-            backgroundColor: colors.chartPalette[800],
-            stack: "base",
-          },
-          {
-            label: "others",
-            data: _others.map((data) => data.VOLUME),
-            backgroundColor: colors.chartPalette[900],
-            stack: "base",
-          },
-        ],
-      });
-      setStatusIBC("loaded");
+      const res = await http.get(apis.getQuickReward);
+      setQuickReward(res[0]);
+      setStatusQuickReward("loaded");
     } catch (error) {
-      setStatusIBC("error");
+      setStatusQuickReward("error");
     }
   };
-
-  const getIBCPercent = async () => {
-    let res = [];
-    setStatusIBCPercent("loading");
+  const getStakingActionDistribution = async () => {
+    setStatusStakingActionDistribution("loading");
     try {
-      res = await http.get(apis.getIBCPercent);
+      const res = await http.get(apis.getStakingActionDistribution);
+      setDataStakingActionDistributionVolume([
+        {
+          id: res[0].ACTION,
+          label: res[0].ACTION,
+          value: res[0].VOLUME.toFixed(2),
+          color: colors.chartPalette[100],
+        },
+        {
+          id: res[1].ACTION,
+          label: res[1].ACTION,
+          value: res[1].VOLUME.toFixed(2),
+          color: colors.chartPalette[200],
+        },
+        {
+          id: res[2].ACTION,
+          label: res[2].ACTION,
+          value: res[2].VOLUME.toFixed(2),
+          color: colors.chartPalette[300],
+        },
+      ]);
 
-      let temp = [];
-      res.map((data, index) => {
-        temp = [
-          ...temp,
-          {
-            id: data.NETWORK,
-            label: data.NETWORK,
-            value: data.VOLUME.toFixed(2),
-            color: colors.chartPalette[(index + 1) * 100],
-          },
-        ];
-      });
-      setDataIBCPercent(temp);
-      setStatusIBCPercent("loaded");
+      setDataStakingActionDistributionCount([
+        {
+          id: res[0].ACTION,
+          label: res[0].ACTION,
+          value: res[0].COUNT.toFixed(2),
+          color: colors.chartPalette[100],
+        },
+        {
+          id: res[1].ACTION,
+          label: res[1].ACTION,
+          value: res[1].COUNT.toFixed(2),
+          color: colors.chartPalette[200],
+        },
+        {
+          id: res[2].ACTION,
+          label: res[2].ACTION,
+          value: res[2].COUNT.toFixed(2),
+          color: colors.chartPalette[300],
+        },
+      ]);
+
+      setStatusStakingActionDistribution("loaded");
     } catch (error) {
-      console.log(error.message);
-      setStatusIBCPercent("error");
+      setStatusStakingActionDistribution("error");
     }
   };
 
@@ -250,6 +203,31 @@ const Staking = () => {
           },
         ],
       });
+
+      setDataWeeklyStakingCount({
+        labels: _redelegate.map((data) => data.WEEK),
+        datasets: [
+          {
+            label: "Redelegate",
+            data: _redelegate.map((data) => data.COUNT),
+            backgroundColor: colors.chartPalette[100],
+            stack: "base",
+          },
+          {
+            label: "Undelegate",
+            data: _undelegate.map((data) => data.COUNT),
+            backgroundColor: colors.chartPalette[200],
+            stack: "base",
+          },
+          {
+            label: "Delegate",
+            data: _delegate.map((data) => data.COUNT),
+            backgroundColor: colors.chartPalette[300],
+            stack: "base",
+          },
+        ],
+      });
+
       setStatusWeeklyStaking("loaded");
     } catch (error) {
       setStatusWeeklyStaking("error");
@@ -280,40 +258,25 @@ const Staking = () => {
             borderColor: colors.chartPalette[200],
             type: "line",
           },
+
+          {
+            label: "USD",
+            data: res.map((data) => data.USD_TOTAL),
+            backgroundColor: colors.chartPalette[100],
+            borderColor: colors.chartPalette[100],
+            type: "line",
+          },
           {
             label: "Count",
             yAxisID: "countAxis",
             data: res.map((data) => data.COUNT),
-            backgroundColor: colors.chartPalette[100],
+            backgroundColor: "#7f7f7fBF",
           },
         ],
       });
       setStatusWeeklyStakingRewardsDistributed("loaded");
     } catch (error) {
       setStatusWeeklyStakingRewardsDistributed("error");
-    }
-  };
-
-  const getRichList = async () => {
-    try {
-      const res = await http.get(apis.getRichList);
-      let data = [];
-      res.map((row) => {
-        data = [...data, [row.USER, row.BALANCE]];
-      });
-      setRichList(data);
-    } catch (error) {}
-  };
-
-  const getTotalAndCirculatingSupply = async () => {
-    setStatusTotalAndCirculatingSupply("loading");
-    try {
-      const res = await http.get(apis.getTotalAndCirculatingSupply);
-      setDataTotalSupply(res.market_data.total_supply);
-      setDataCirculatingSupply(res.market_data.circulating_supply);
-      setStatusTotalAndCirculatingSupply("loaded");
-    } catch (error) {
-      setStatusTotalAndCirculatingSupply("error");
     }
   };
 
@@ -337,26 +300,43 @@ const Staking = () => {
     }
   };
 
+  const getTotalSupply = async () => {
+    setStatusTotalSupply("loading");
+    try {
+      const res = await http.get(apis.getTotalAndCirculatingSupply);
+      setDataTotalSupply(res.market_data.total_supply);
+      setStatusTotalSupply("loaded");
+    } catch (error) {
+      console.log(error.message);
+      setStatusTotalSupply("error");
+    }
+  };
+
+  const getTotalLunaStaked = async () => {
+    setStatusTotalLunaStaked("loading");
+    try {
+      const res = await http.get(apis.getTotalLunaStaked);
+      setDataTotalLunaStaked(res.result.bonded_tokens / 1e6);
+      setStatusTotalLunaStaked("loaded");
+    } catch (error) {
+      console.log(error.message);
+      setStatusTotalLunaStaked("error");
+    }
+  };
+
   return (
     <Box
       sx={{
         padding: "20px",
       }}
     >
-      <Header
-        title="Supply"
-        subtitle="The Supply page includes data about the supply and distribution of LUNA,
-         the native token of the Terra blockchain. It can give an indication of the overall
-          supply and distribution of LUNA, as well as the transfer of LUNA between the Terra and other blockchain networks,
-         and the distribution and timing of the airdropped tokens."
-      />
-
       <Grid container gap={2}>
         <Grid item xs={12}>
           <Header
-            title="Terra(LUNA) token"
-            subtitle="This section includes data about the supply of LUNA. 
-            It can give an indication of the overall distribution of LUNA."
+            title="Staking"
+            subtitle="The Staking page includes data about the Terra network's proof-of-stake (PoS) consensus algorithm.
+         It can give an indication of the activity and performance of the PoS system.
+        "
           />
         </Grid>
         <Grid item xs={12} lg={3.8}>
@@ -366,38 +346,36 @@ const Staking = () => {
             info={
               dataTotalSupply ? dataTotalSupply.toLocaleString("en-US") : null
             }
-            status={statusTotalAndCirculatingSupply}
-            getData={getTotalAndCirculatingSupply}
+            status={statusTotalSupply}
+            getData={getTotalSupply}
           />
         </Grid>
         <Grid item xs={12} lg={3.8}>
           <InfoCard
-            title="Circulating Supply"
-            source={apis.queryTotalAndCirculatingSupply}
+            title="Total staked LUNA"
+            source={apis.getTotalLunaStaked}
             info={
-              dataCirculatingSupply
-                ? dataCirculatingSupply.toLocaleString("en-US")
+              dataTotalLunaStaked
+                ? dataTotalLunaStaked.toLocaleString("en-US")
                 : null
             }
-            status={statusTotalAndCirculatingSupply}
-            getData={getTotalAndCirculatingSupply}
+            status={statusTotalLunaStaked}
+            getData={getTotalLunaStaked}
           />
         </Grid>
 
         <Grid item xs={12} lg={3.8}>
           <InfoCard
-            title="Circulation Ratio"
+            title="Staking Ratio"
             source={apis.queryTotalAndCirculatingSupply}
             info={
-              dataCirculatingSupply && dataTotalNumberOfStakedLUNA
-                ? (
-                    (dataCirculatingSupply * 100) /
-                    dataTotalNumberOfStakedLUNA
-                  ).toFixed(2) + "%"
+              dataTotalLunaStaked && dataTotalSupply
+                ? ((dataTotalLunaStaked * 100) / dataTotalSupply).toFixed(2) +
+                  "%"
                 : null
             }
-            status={statusTotalAndCirculatingSupply}
-            getData={getTotalAndCirculatingSupply}
+            status={statusTotalSupply}
+            getData={getTotalSupply}
           />
         </Grid>
       </Grid>
@@ -405,44 +383,99 @@ const Staking = () => {
       <Grid container gap={2} sx={{ marginTop: "20px" }}>
         <Grid item xs={12}>
           <Header
-            title="IBC"
-            subtitle="This section includes data about the amount of LUNA that is transferred between 
-          the Terra and other blockchain networks via the Inter-Blockchain Communication (IBC) protocol,
-           as well as the most used chains for IBC. This data can give an 
-          indication of the level of interoperability between the Terra and other blockchain networks."
+            title="Staking actions"
+            subtitle="This section includes data about staking actions on the Terra network.
+             It can give an indication of the level of engagement and 
+            participation in the network's proof-of-stake (PoS) consensus algorithm."
           />
         </Grid>
 
         <MyChart
-          title="Most used chains for IBC"
-          Chart={IBCPercent}
-          data={dataIBCPercent}
-          getData={getIBCPercent}
-          status={statusIBCPercent}
-          id="IBCPercent"
+          title="Weekly staking actions by count"
+          Chart={WeeklyStakingCount}
+          data={dataWeeklyStakingCount}
+          getData={getWeeklyStaking}
+          status={StatusWeeklyStaking}
         />
 
         <MyChart
-          title="# of LUNA IBC-ed out weekly"
-          Chart={IBC}
-          data={dataIBC}
-          getData={getIBC}
-          status={statusIBC}
+          title="Staking actions distribution by count"
+          Chart={StakingActionDistributionCount}
+          data={dataStakingActionDistributionCount}
+          getData={getStakingActionDistribution}
+          status={statusStakingActionDistribution}
         />
 
         <MyChart
-          title="Weekly Staking"
+          title="Weekly staking actions by volume"
           Chart={WeeklyStaking}
           data={dataWeeklyStaking}
           getData={getWeeklyStaking}
           status={StatusWeeklyStaking}
         />
+
+        <MyChart
+          title="Staking actions distribution by volume"
+          Chart={StakingActionDistributionVolume}
+          data={dataStakingActionDistributionVolume}
+          getData={getStakingActionDistribution}
+          status={statusStakingActionDistribution}
+        />
+      </Grid>
+
+      <Grid container gap={2} sx={{ marginTop: "20px" }}>
+        <Grid item xs={12}>
+          <Header
+            title="Rewards distribution"
+            subtitle="This section includes data about the distribution of staking rewards on the Terra network.
+             It can give an indication of the distribution of rewards among stakers and the overall health of the PoS system."
+          />
+        </Grid>
+        <Grid item xs={12} lg={3.8}>
+          <InfoCard
+            title="Total rewards distributed"
+            info={
+              quickReward
+                ? quickReward.TOTAL_REWARDS.toLocaleString("en-US")
+                : null
+            }
+            status={statusQuickReward}
+            getData={getQuickReward}
+          />
+        </Grid>
+        <Grid item xs={12} lg={3.8}>
+          <InfoCard
+            title="# of receivers"
+            info={
+              quickReward
+                ? quickReward.RECEIVERS_COUNT.toLocaleString("en-US")
+                : null
+            }
+            status={statusQuickReward}
+            getData={getQuickReward}
+          />
+        </Grid>
+        <Grid item xs={12} lg={3.8}>
+          <InfoCard
+            title="Average reward per receiver"
+            info={
+              quickReward
+                ? quickReward.AVERAGE_REWARD_PER_RECEIVER.toLocaleString(
+                    "en-US"
+                  )
+                : null
+            }
+            status={statusQuickReward}
+            getData={getQuickReward}
+          />
+        </Grid>
         <MyChart
           title="Weekly Staking Reward Distributed"
           Chart={WeeklyStakingRewardsDistributed}
           data={dataWeeklyStakingRewardsDistributed}
           getData={getWeeklyStakingRewardsDistributed}
           status={statusWeeklyStakingRewardsDistributed}
+          defaultSize={100}
         />
       </Grid>
     </Box>

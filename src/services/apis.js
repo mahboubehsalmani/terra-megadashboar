@@ -135,6 +135,17 @@ const getIBC =
 const getIBCPercent =
   "https://api.flipsidecrypto.com/api/v2/queries/126c2e9f-5322-476e-8b2f-4d1068e83ba3/data/latest";
 
+// staking
+
+const getStakingActionDistribution =
+  "https://api.flipsidecrypto.com/api/v2/queries/df6d8549-3715-45bd-abec-85fc382ca3dc/data/latest";
+const queryStakingActionDistribution = "";
+
+const getQuickReward =
+  "https://api.flipsidecrypto.com/api/v2/queries/74cd6033-a63d-4c1a-b647-8819ed4e03ef/data/latest";
+
+const getTotalLunaStaked = "https://phoenix-lcd.terra.dev/staking/pool";
+
 export default {
   getAverageTransactionFeePerTransactionPerWeek,
   getTotalTransactionFeesPerWeek,
@@ -187,4 +198,8 @@ export default {
   queryActiveContractsWeekly,
   getMoatUsedContracts,
   queryMostUsedContracts,
+  getStakingActionDistribution,
+  queryStakingActionDistribution,
+  getQuickReward,
+  getTotalLunaStaked,
 };

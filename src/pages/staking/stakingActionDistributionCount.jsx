@@ -2,7 +2,7 @@ import { useTheme } from "@mui/material";
 import PieChart from "../../components/PieChart";
 import { tokens } from "../../theme";
 
-const IBCPercent = ({ data, id }) => {
+const StakingActionDistributionCount = ({ data, id }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -31,7 +31,7 @@ const IBCPercent = ({ data, id }) => {
         title: {
           display: true,
           color: colors.secondary[400],
-          text: "Volume (LUNA)",
+          text: "Count",
         },
       },
       x: {
@@ -53,7 +53,6 @@ const IBCPercent = ({ data, id }) => {
     },
   };
 
-  return <PieChart data={data} id={id} />;
+  return <PieChart data={data} />;
 };
-
-export default IBCPercent;
+export default StakingActionDistributionCount;

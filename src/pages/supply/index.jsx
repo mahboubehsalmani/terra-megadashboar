@@ -1,12 +1,9 @@
 import { Box, Grid, useTheme } from "@mui/material";
-import RichBox from "./richBox";
-import WeeklyStaking from "./weeklyStaking";
 import MyChart from "../../components/MyChart";
 import { useEffect, useState } from "react";
 import { tokens } from "../../theme";
 import http from "../../services/http";
 import apis from "../../services/apis";
-import WeeklyStakingRewardsDistributed from "./weeklyStakingRewardsDistributed";
 import InfoCard from "../../components/InfoCard";
 import IBC from "./IBC";
 import IBCPercent from "./IBCPercent";
@@ -16,55 +13,13 @@ import Header from "../../components/Header";
 const Supply = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [richList, setRichList] = useState([]);
-  const [StatusWeeklyStaking, setStatusWeeklyStaking] = useState("loading");
+
   const [statusIBC, setStatusIBC] = useState("loading");
   const [statusIBCPercent, setStatusIBCPercent] = useState("loading");
   const [dataTotalSupply, setDataTotalSupply] = useState(null);
   const [dataCirculatingSupply, setDataCirculatingSupply] = useState(null);
-  const [dataTotalPercentStakedLUNA, setDataTotalPercentStakedLUNA] =
-    useState(null);
   const [statusTotalAndCirculatingSupply, setStatusTotalAndCirculatingSupply] =
     useState("loading");
-  const [dataTotalNumberOfStakedLUNA, setDataTotalNumberOfStakedLUNA] =
-    useState(null);
-  const [
-    statusTotalNumberAndPercentOfStakedLUNA,
-    setStatusTotalNumberAndPercentOfStakedLUNA,
-  ] = useState("loading");
-  const [
-    statusWeeklyStakingRewardsDistributed,
-    setStatusWeeklyStakingRewardsDistributed,
-  ] = useState("loading");
-  const [dataWeeklyStaking, setDataWeeklyStaking] = useState({
-    labels: [],
-    datasets: [
-      {
-        label: "Average",
-        data: [],
-        backgroundColor: [colors.secondary[400]],
-        borderColor: colors.secondary[500],
-        borderWidth: 1,
-      },
-    ],
-  });
-
-  const [
-    dataWeeklyStakingRewardsDistributed,
-    setDataWeeklyStakingRewardsDistributed,
-  ] = useState({
-    labels: [],
-    datasets: [
-      {
-        label: "Average",
-        data: [],
-        backgroundColor: [colors.secondary[400]],
-        borderColor: colors.secondary[500],
-        borderWidth: 1,
-      },
-    ],
-  });
-
   const [dataIBC, setDataIBC] = useState({
     labels: [],
     datasets: [
@@ -93,17 +48,9 @@ const Supply = () => {
 
   useEffect(() => {
     getIBC();
-    getWeeklyStaking();
-    getWeeklyStakingRewardsDistributed();
-    getRichList();
     getTotalAndCirculatingSupply();
-    getTotalNumberOfStakedLUNA();
     getIBCPercent();
   }, []);
-
-  useEffect(() => {
-    getTotalPercentofStakedLUNA();
-  }, [dataTotalSupply, dataTotalNumberOfStakedLUNA]);
 
   const getIBC = async () => {
     let res = [];
@@ -213,98 +160,6 @@ const Supply = () => {
     }
   };
 
-  const getWeeklyStaking = async () => {
-    let res = [];
-    setStatusWeeklyStaking("loading");
-    try {
-      res = await http.get(apis.getWeeklyStaking);
-      let _delegate = [];
-      let _undelegate = [];
-      let _redelegate = [];
-      await res.map((data) => {
-        if (data.ACTION === "Redelegate") _redelegate = [..._redelegate, data];
-        else if (data.ACTION === "Undelegate")
-          _undelegate = [..._undelegate, data];
-        else _delegate = [..._delegate, data];
-      });
-      setDataWeeklyStaking({
-        labels: _redelegate.map((data) => data.WEEK),
-        datasets: [
-          {
-            label: "Redelegate",
-            data: _redelegate.map((data) => data.VOLUME),
-            backgroundColor: colors.chartPalette[100],
-            stack: "base",
-          },
-          {
-            label: "Undelegate",
-            data: _undelegate.map((data) => data.VOLUME),
-            backgroundColor: colors.chartPalette[200],
-            stack: "base",
-          },
-          {
-            label: "Delegate",
-            data: _delegate.map((data) => data.VOLUME),
-            backgroundColor: colors.chartPalette[300],
-            stack: "base",
-          },
-        ],
-      });
-      setStatusWeeklyStaking("loaded");
-    } catch (error) {
-      setStatusWeeklyStaking("error");
-    }
-  };
-
-  const getWeeklyStakingRewardsDistributed = async () => {
-    let res = [];
-    setStatusWeeklyStakingRewardsDistributed("loading");
-    try {
-      res = await http.get(apis.getWeeklyStakingRewardsDistributed);
-      let _delegate = [];
-      let _undelegate = [];
-      let _redelegate = [];
-      await res.map((data) => {
-        if (data.ACTION === "Redelegate") _redelegate = [..._redelegate, data];
-        else if (data.ACTION === "Undelegate")
-          _undelegate = [..._undelegate, data];
-        else _delegate = [..._delegate, data];
-      });
-      setDataWeeklyStakingRewardsDistributed({
-        labels: res.map((data) => data.WEEK),
-        datasets: [
-          {
-            label: "Volume(LUNA)",
-            data: res.map((data) => data.VOLUME),
-            backgroundColor: colors.chartPalette[200],
-            borderColor: colors.chartPalette[200],
-            type: "line",
-          },
-          {
-            label: "Count",
-            yAxisID: "countAxis",
-            data: res.map((data) => data.COUNT),
-            backgroundColor: colors.chartPalette[100],
-          },
-        ],
-      });
-      setStatusWeeklyStakingRewardsDistributed("loaded");
-    } catch (error) {
-      setStatusWeeklyStakingRewardsDistributed("error");
-    }
-  };
-
-  const getRichList = async () => {
-    try {
-      const res = await http.get(apis.getRichList);
-      let data = [];
-      res.map((row) => {
-        data = [...data, [row.USER, row.BALANCE]];
-      });
-      setRichList(data);
-    } catch (error) {}
-  };
-
   const getTotalAndCirculatingSupply = async () => {
     setStatusTotalAndCirculatingSupply("loading");
     try {
@@ -314,26 +169,6 @@ const Supply = () => {
       setStatusTotalAndCirculatingSupply("loaded");
     } catch (error) {
       setStatusTotalAndCirculatingSupply("error");
-    }
-  };
-
-  const getTotalNumberOfStakedLUNA = async () => {
-    setStatusTotalNumberAndPercentOfStakedLUNA("loading");
-    try {
-      const res = await http.get(apis.getTotalNumberOfStakedLUNA);
-      setDataTotalNumberOfStakedLUNA(res.result.bonded_tokens / 1e6);
-
-      setStatusTotalNumberAndPercentOfStakedLUNA("loaded");
-    } catch (error) {
-      setStatusTotalNumberAndPercentOfStakedLUNA("error");
-    }
-  };
-
-  const getTotalPercentofStakedLUNA = () => {
-    if (dataTotalNumberOfStakedLUNA != null) {
-      const temp = (dataTotalNumberOfStakedLUNA / dataTotalSupply) * 100;
-      console.log(temp.toFixed(2));
-      setDataTotalPercentStakedLUNA(temp.toFixed(2));
     }
   };
 
@@ -389,11 +224,9 @@ const Supply = () => {
             title="Circulation Ratio"
             source={apis.queryTotalAndCirculatingSupply}
             info={
-              dataCirculatingSupply && dataTotalNumberOfStakedLUNA
-                ? (
-                    (dataCirculatingSupply * 100) /
-                    dataTotalNumberOfStakedLUNA
-                  ).toFixed(2) + "%"
+              dataCirculatingSupply && dataTotalSupply
+                ? ((dataCirculatingSupply * 100) / dataTotalSupply).toFixed(2) +
+                  "%"
                 : null
             }
             status={statusTotalAndCirculatingSupply}

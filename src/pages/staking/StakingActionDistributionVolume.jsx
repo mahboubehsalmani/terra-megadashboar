@@ -2,7 +2,7 @@ import { useTheme } from "@mui/material";
 import PieChart from "../../components/PieChart";
 import { tokens } from "../../theme";
 
-const IBCPercent = ({ data, id }) => {
+const StakingActionDistributionVolume = ({ data, id }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -55,5 +55,4 @@ const IBCPercent = ({ data, id }) => {
 
   return <PieChart data={data} id={id} />;
 };
-
-export default IBCPercent;
+export default StakingActionDistributionVolume;

@@ -9,6 +9,7 @@ import Development from "./pages/development/index";
 import Supply from "./pages/supply/index";
 import About from "./pages/about/index";
 import Governance from "./pages/governance/index";
+import Staking from "./pages/staking/index";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -29,6 +30,7 @@ function App() {
               <Route path="/supply" element={<Supply />} />
               <Route path="/about" element={<About />} />
               <Route path="/governance" element={<Governance />} />
+              <Route path="/staking" element={<Staking />} />
             </Routes>
           </main>
         </div>

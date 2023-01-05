@@ -1,9 +1,8 @@
 import { useTheme } from "@mui/material";
-import BarChart from "../../components/BarChart";
-import PieChart from "../../components/PieChart";
 import { tokens } from "../../theme";
+import LineChart from "../../components/LineChart";
 
-const IBCPercent = ({ data, id }) => {
+const ActiveContractsWeekly = ({ data, id }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -13,7 +12,6 @@ const IBCPercent = ({ data, id }) => {
     plugins: {
       legend: {
         position: "top",
-        display: false,
       },
       title: {
         display: true,
@@ -28,11 +26,6 @@ const IBCPercent = ({ data, id }) => {
         grid: {
           display: true,
           color: colors.grey[600],
-        },
-        title: {
-          display: true,
-          color: colors.secondary[400],
-          text: "Volume (LUNA)",
         },
       },
       x: {
@@ -54,7 +47,7 @@ const IBCPercent = ({ data, id }) => {
     },
   };
 
-  return <PieChart data={data} id={id} />;
+  return <LineChart chartData={data} options={options} id={id} />;
 };
 
-export default IBCPercent;
+export default ActiveContractsWeekly;

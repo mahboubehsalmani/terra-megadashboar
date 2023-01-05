@@ -1,9 +1,8 @@
 import { useTheme } from "@mui/material";
-import BarChart from "../../components/BarChart";
 import PieChart from "../../components/PieChart";
 import { tokens } from "../../theme";
 
-const IBCPercent = ({ data, id }) => {
+const MostUsedContracts = ({ data, id }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -57,4 +56,4 @@ const IBCPercent = ({ data, id }) => {
   return <PieChart data={data} id={id} />;
 };
 
-export default IBCPercent;
+export default MostUsedContracts;

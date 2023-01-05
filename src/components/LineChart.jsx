@@ -3,9 +3,6 @@ import { Line } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
 
 function LineChart({ chartData, options, chartWidth, id, noPoint }) {
-  useEffect(() => {
-    console.log(id);
-  }, [id]);
   return (
     <Line
       id={id}

@@ -7,6 +7,8 @@ import Wallets from "./pages/wallets";
 import MaterialSidabar from "./global/MaterialSidebar";
 import Development from "./pages/development/index";
 import Supply from "./pages/supply/index";
+import About from "./pages/about/index";
+import Governance from "./pages/governance/index";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -25,6 +27,8 @@ function App() {
               <Route path="/wallets" element={<Wallets />} />
               <Route path="/developments" element={<Development />} />
               <Route path="/supply" element={<Supply />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/governance" element={<Governance />} />
             </Routes>
           </main>
         </div>

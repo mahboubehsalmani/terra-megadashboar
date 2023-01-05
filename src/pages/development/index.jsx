@@ -8,10 +8,29 @@ import { useEffect, useState } from "react";
 import http from "../../services/http";
 import NumberOfCommitsPerWeek from "./numberOfCommitsPerWeek";
 import TotalContractsDeployedEachWeek from "./totalContractsDeployedEachWeek";
+import ActiveContractsWeekly from "./activeContractsWeekly";
+import MostUsedContracts from "./mostUsedContracts";
 
 const Development = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [dataMostUsedContracts, setDataMostUsedContracts] = useState([]);
+  const [statusMostUsedContracts, setStatusMostUsedContracts] =
+    useState("loadig");
+  const [statusActiveContractsWeekly, setStatusActiveContractsWeekly] =
+    useState("loading");
+  const [dataActiveContractsWeekly, setDataActiveContractsWeekly] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: "Actie contracts",
+        data: [],
+        backgroundColor: [colors.chartPalette[100]],
+        borderColor: colors.chartPalette[100],
+        borderWidth: 1,
+      },
+    ],
+  });
   const [loading, setLoading] = useState("loaded");
   const [
     statusTotalContractsDeployedEachWeek,
@@ -51,7 +70,32 @@ const Development = () => {
   useEffect(() => {
     getNewContractsDeployedEachWeek();
     getTotalContractsDeployedEachWeek();
+    getActiveContractsWeekly();
+    getMostUsedContracts();
   }, []);
+
+  const getActiveContractsWeekly = async () => {
+    let res = [];
+    setStatusActiveContractsWeekly("loading");
+    try {
+      res = await http.get(apis.getActiveContractsWeekly);
+      setDataActiveContractsWeekly({
+        labels: res.map((data) => data.WEEK),
+        datasets: [
+          {
+            label: "NEW CONTRACTS",
+            data: res.map((data) => data.CONTRACTS),
+            backgroundColor: [colors.chartPalette[100]],
+            borderColor: colors.chartPalette[100],
+            borderWidth: 1,
+          },
+        ],
+      });
+      setStatusActiveContractsWeekly("loaded");
+    } catch (error) {
+      setStatusActiveContractsWeekly("error");
+    }
+  };
 
   const getNewContractsDeployedEachWeek = async () => {
     let res = [];
@@ -99,16 +143,48 @@ const Development = () => {
     }
   };
 
+  const getMostUsedContracts = async () => {
+    let res = [];
+    setStatusMostUsedContracts("loading");
+    try {
+      res = await http.get(apis.getMoatUsedContracts);
+
+      let temp = [];
+      res.map((data, index) => {
+        temp = [
+          ...temp,
+          {
+            id: data.CONTRACT,
+            label: data.CONTRACT,
+            value: data.TRANSACTIONS,
+            color: colors.chartPalette[(index + 1) * 100],
+          },
+        ];
+      });
+      setDataMostUsedContracts(temp);
+      setStatusMostUsedContracts("loaded");
+    } catch (error) {
+      console.log(error.message);
+      setStatusMostUsedContracts("error");
+    }
+  };
   return (
     <Box sx={{ padding: "20px" }}>
       <Header
         title="Developments"
-        subtitle="Shows charst of Developments in Terradash"
+        subtitle="The Development page includes data about contracts and development activity within the Terra community.
+         It can give an indication of the community's progress and adoption of smart contracts on the network.
+        "
       />
 
       <Grid container gap={2}>
+        <Header
+          title="Contracts"
+          subtitle="This section includes data about the contracts on the Terra network. 
+          It can give an indication of the activity and popularity of smart contracts on the network."
+        />
         <MyChart
-          title="New Contracts Deployed Each Week"
+          title="# of new contracts weekly"
           Chart={NewContractsDeployedEachWeek}
           url={apis.queryNewContractsDeployedEachWeek}
           status={loading}
@@ -118,7 +194,7 @@ const Development = () => {
         />
 
         <MyChart
-          title="Total Contracts Deployed Each Week"
+          title="# of total contracts weekly"
           Chart={TotalContractsDeployedEachWeek}
           url={apis.queryTotalContractsDeployedEachWeek}
           status={statusTotalContractsDeployedEachWeek}
@@ -128,7 +204,42 @@ const Development = () => {
         />
 
         <MyChart
-          title="Number of Commits per Week"
+          title="# of active contracts weekly"
+          Chart={ActiveContractsWeekly}
+          url={apis.queryActiveContractsWeekly}
+          status={statusActiveContractsWeekly}
+          data={dataActiveContractsWeekly}
+          getData={getActiveContractsWeekly}
+          id={"ActiveContractsWeekly"}
+        />
+
+        <MyChart
+          title="Most used contracts"
+          Chart={MostUsedContracts}
+          url={apis.queryMostUsedContracts}
+          status={statusMostUsedContracts}
+          data={dataMostUsedContracts}
+          getData={getMostUsedContracts}
+          id={"MostUsedContracts"}
+        />
+      </Grid>
+
+      <Grid container gap={2}>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            marginTop: "28px",
+          }}
+        >
+          <Header
+            title="Github development"
+            subtitle=" This section includes data about the development activity on the Terra Github repository."
+          />
+        </Grid>
+
+        <MyChart
+          title="# of commits Weekly"
           Chart={NumberOfCommitsPerWeek}
           url={
             "https://github.com/terra-money/core/graphs/commit-activity-data"

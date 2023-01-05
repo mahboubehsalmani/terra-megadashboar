@@ -97,6 +97,16 @@ const getTotalContractsDeployedEachWeek =
 const queryTotalContractsDeployedEachWeek =
   "https://app.flipsidecrypto.com/velocity/queries/7a018c05-2a2b-4bb9-8b6c-377eecec2ed8";
 
+const getActiveContractsWeekly =
+  "https://api.flipsidecrypto.com/api/v2/queries/c272cb70-4e32-4fd0-ad47-9c68c0ff54dd/data/latest";
+
+const queryActiveContractsWeekly =
+  "https://app.flipsidecrypto.com/velocity/queries/c272cb70-4e32-4fd0-ad47-9c68c0ff54dd";
+
+const getMoatUsedContracts =
+  "https://api.flipsidecrypto.com/api/v2/queries/439fb5f0-cb8f-45ca-b477-6fe03b1ac7ad/data/latest";
+const queryMostUsedContracts =
+  "https://app.flipsidecrypto.com/velocity/queries/439fb5f0-cb8f-45ca-b477-6fe03b1ac7ad";
 // Supply
 
 const getRichList =
@@ -173,4 +183,8 @@ export default {
   getNumberofWallets,
   getActiveNewWallets,
   getAverageTxPerWallet,
+  getActiveContractsWeekly,
+  queryActiveContractsWeekly,
+  getMoatUsedContracts,
+  queryMostUsedContracts,
 };

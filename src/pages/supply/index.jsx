@@ -418,6 +418,7 @@ const Supply = () => {
           data={dataIBCPercent}
           getData={getIBCPercent}
           status={statusIBCPercent}
+          id="IBCPercent"
         />
 
         <MyChart

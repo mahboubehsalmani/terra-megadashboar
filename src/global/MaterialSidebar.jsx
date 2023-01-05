@@ -18,6 +18,7 @@ import {
   ComputerOutlined as DevelopmentOutlinedIcon,
   InventoryOutlined as SupplyOutlinedIcon,
   PaymentsOutlined as TransactionOutlinedIcon,
+  InfoOutlined as AboutIcon,
   Gavel as GovernanceIcon,
   Savings as StakingIcon,
 } from "@mui/icons-material";
@@ -213,6 +214,15 @@ const Sidebar = () => {
             title={"Governance"}
             Icon={<GovernanceIcon />}
             to="/governance"
+            open={open}
+            selected={selected}
+            setSelected={setSelected}
+          />
+
+          <SidebarItem
+            title={"About"}
+            Icon={<AboutIcon />}
+            to="/about"
             open={open}
             selected={selected}
             setSelected={setSelected}

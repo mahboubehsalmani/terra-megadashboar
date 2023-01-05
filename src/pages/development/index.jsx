@@ -24,7 +24,7 @@ const Development = () => {
     labels: [],
     datasets: [
       {
-        label: "Actie contracts",
+        label: "Active Contract",
         data: [],
         backgroundColor: [colors.chartPalette[100]],
         borderColor: colors.chartPalette[100],
@@ -44,10 +44,10 @@ const Development = () => {
     labels: [],
     datasets: [
       {
-        label: "Average",
+        label: "Deployed contract",
         data: [],
-        backgroundColor: [colors.secondary[400]],
-        borderColor: colors.secondary[500],
+        backgroundColor: [colors.chartPalette[100]],
+        borderColor: colors.chartPalette[100],
         borderWidth: 1,
       },
     ],
@@ -59,10 +59,10 @@ const Development = () => {
     labels: [],
     datasets: [
       {
-        label: "Average",
+        label: "NEW CONTRACTS",
         data: [],
-        backgroundColor: [colors.secondary[400]],
-        borderColor: colors.secondary[500],
+        backgroundColor: [colors.chartPalette[100]],
+        borderColor: colors.chartPalette[100],
         borderWidth: 1,
       },
     ],
@@ -84,7 +84,7 @@ const Development = () => {
         labels: res.map((data) => data.WEEK),
         datasets: [
           {
-            label: "NEW CONTRACTS",
+            label: "Active Contract",
             data: res.map((data) => data.CONTRACTS),
             backgroundColor: [colors.chartPalette[100]],
             borderColor: colors.chartPalette[100],

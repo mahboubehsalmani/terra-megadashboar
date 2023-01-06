@@ -31,7 +31,7 @@ const WeeklyStakingCount = ({ data }) => {
         title: {
           display: true,
           color: colors.secondary[400],
-          text: "Volume (LUNA)",
+          text: "Count",
         },
       },
       x: {

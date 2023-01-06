@@ -40,7 +40,7 @@ const Activity = () => {
       labels: [],
       datasets: [
         {
-          label: "Average",
+          label: "Total Fee",
           data: [],
           backgroundColor: [colors.secondary[400]],
           borderColor: colors.secondary[500],
@@ -52,7 +52,7 @@ const Activity = () => {
     labels: [],
     datasets: [
       {
-        label: "Average",
+        label: "Average TPS",
         data: [],
         backgroundColor: [colors.secondary[400]],
         borderColor: colors.secondary[500],
@@ -68,11 +68,28 @@ const Activity = () => {
     labels: [],
     datasets: [
       {
-        label: "Average",
+        label: "Transactions",
         data: [],
-        backgroundColor: [colors.secondary[400]],
-        borderColor: colors.secondary[500],
-        borderWidth: 1,
+        backgroundColor: [colors.chartPalette[100]],
+        borderColor: colors.chartPalette[100],
+        borderWidth: 3,
+        type: "line",
+      },
+
+      {
+        label: "Sucessful",
+        data: [],
+        backgroundColor: "#0a9396",
+        stack: "base",
+        type: "bar",
+      },
+
+      {
+        label: "Failed",
+        data: [],
+        backgroundColor: "#9b2226",
+        stack: "base",
+        type: "bar",
       },
     ],
   });
@@ -82,7 +99,7 @@ const Activity = () => {
       labels: [],
       datasets: [
         {
-          label: "Average",
+          label: "Average block time",
           data: [],
           backgroundColor: [colors.secondary[400]],
           borderColor: colors.secondary[500],
@@ -98,7 +115,7 @@ const Activity = () => {
     labels: [],
     datasets: [
       {
-        label: "Average",
+        label: "Average fee",
         data: [],
         backgroundColor: [colors.secondary[400]],
         borderColor: colors.secondary[500],
@@ -135,7 +152,7 @@ const Activity = () => {
         labels: res.map((data) => data.WEEK),
         datasets: [
           {
-            label: "Average",
+            label: "Total Fee",
             data: res.map((data) => data.TOTAL),
             backgroundColor: [colors.secondary[400]],
             borderColor: colors.secondary[500],
@@ -158,7 +175,7 @@ const Activity = () => {
         labels: res.map((data) => data.WEEK),
         datasets: [
           {
-            label: "Average",
+            label: "Average TPS",
             data: res.map((data) => data.AVERAGE_TPS),
             backgroundColor: [colors.secondary[400]],
             borderColor: colors.secondary[500],
@@ -183,7 +200,7 @@ const Activity = () => {
         labels: res.map((data) => data.WEEK),
         datasets: [
           {
-            label: "Average",
+            label: "Transactions",
             data: res.map((data) => data.TOTAL),
             backgroundColor: [colors.chartPalette[100]],
             borderColor: colors.chartPalette[100],
@@ -223,7 +240,7 @@ const Activity = () => {
         labels: res.map((data) => data.WEEK),
         datasets: [
           {
-            label: "Average",
+            label: "Average block time",
             data: res.map((data) => data.AVERAGE_BLOCK_TIME),
             backgroundColor: [colors.secondary[400]],
             borderColor: colors.secondary[500],
@@ -246,7 +263,7 @@ const Activity = () => {
         labels: res.map((data) => data.WEEK),
         datasets: [
           {
-            label: "Average",
+            label: "Average fee",
             data: res.map((data) => data.AVERAGE),
             backgroundColor: [colors.secondary[400]],
             borderColor: colors.secondary[500],

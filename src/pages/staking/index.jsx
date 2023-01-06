@@ -52,11 +52,22 @@ const Staking = () => {
     labels: [],
     datasets: [
       {
-        label: "Average",
+        label: "Redelegate",
         data: [],
-        backgroundColor: [colors.secondary[400]],
-        borderColor: colors.secondary[500],
-        borderWidth: 1,
+        backgroundColor: colors.chartPalette[100],
+        stack: "base",
+      },
+      {
+        label: "Undelegate",
+        data: [],
+        backgroundColor: colors.chartPalette[200],
+        stack: "base",
+      },
+      {
+        label: "Delegate",
+        data: [],
+        backgroundColor: colors.chartPalette[300],
+        stack: "base",
       },
     ],
   });
@@ -65,11 +76,22 @@ const Staking = () => {
     labels: [],
     datasets: [
       {
-        label: "Average",
+        label: "Redelegate",
         data: [],
-        backgroundColor: [colors.secondary[400]],
-        borderColor: colors.secondary[500],
-        borderWidth: 1,
+        backgroundColor: colors.chartPalette[100],
+        stack: "base",
+      },
+      {
+        label: "Undelegate",
+        data: [],
+        backgroundColor: colors.chartPalette[200],
+        stack: "base",
+      },
+      {
+        label: "Delegate",
+        data: [],
+        backgroundColor: colors.chartPalette[300],
+        stack: "base",
       },
     ],
   });
@@ -81,11 +103,25 @@ const Staking = () => {
     labels: [],
     datasets: [
       {
-        label: "Average",
+        label: "Volume(LUNA)",
         data: [],
-        backgroundColor: [colors.secondary[400]],
-        borderColor: colors.secondary[500],
-        borderWidth: 1,
+        backgroundColor: colors.chartPalette[200],
+        borderColor: colors.chartPalette[200],
+        type: "line",
+      },
+
+      {
+        label: "USD",
+        data: [],
+        backgroundColor: colors.chartPalette[100],
+        borderColor: colors.chartPalette[100],
+        type: "line",
+      },
+      {
+        label: "Count",
+        yAxisID: "countAxis",
+        data: [],
+        backgroundColor: "#7f7f7fBF",
       },
     ],
   });
